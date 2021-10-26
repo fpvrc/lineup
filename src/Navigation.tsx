@@ -12,15 +12,20 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBar from "./components/tabBar";
 
 //Screens
-import Landing from "./screens/landing";
+import User from "./screens/user";
 import SignInPhone from "./screens/signInPhone";
+import Content from "./screens/content";
+import NewMenu from "./screens/newMenu";
 
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
   return (
-    <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
-      <Tab.Screen name="Landing" component={Landing} />
-      <Tab.Screen name="SignInPhone" component={SignInPhone} />
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      tabBar={(props) => <TabBar {...props} />}
+    >
+      <Tab.Screen name="User" component={User} />
+      <Tab.Screen name="Content" component={Content} />
     </Tab.Navigator>
   );
 };
@@ -71,6 +76,8 @@ const Navigation: React.FC<{ setUser: (user: object) => void }> = ({
         }}
       >
         <MainStack.Screen name="Tabs" component={Tabs} />
+        <Tab.Screen name="SignInPhone" component={SignInPhone} />
+        <Tab.Screen name="NewMenu" component={NewMenu} />
       </MainStack.Navigator>
     </NavigationContainer>
   );

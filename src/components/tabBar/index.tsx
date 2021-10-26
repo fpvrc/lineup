@@ -1,13 +1,28 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
   state,
   descriptors,
   navigation,
 }) => {
+  const { colors, fonts } = useTheme() as any;
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View
+      style={{
+        backgroundColor: colors.backgroundWite,
+        flexDirection: "row",
+        height: hp("12%"),
+        borderTopLeftRadius: wp("3%"),
+        borderTopRightRadius: wp("3%"),
+      }}
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -27,7 +42,6 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            // The `merge: true` option makes sure that the params inside the tab screen are preserved
             navigation.navigate({ name: route.name, merge: true });
           }
         };
@@ -41,17 +55,54 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
 
         return (
           <TouchableOpacity
+            activeOpacity={1}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1 }}
+            style={{ flex: 1, justifyContent: "center" }}
           >
-            <Text style={{ color: isFocused ? "#673ab7" : "#222" }}>
-              {label}
-            </Text>
+            {label === "User" ? (
+              <>
+                <Icon
+                  style={{
+                    fontSize: 56,
+                    alignSelf: "center",
+                    shadowOpacity: 0.25,
+                    elevation: 6,
+                    shadowRadius: 12,
+                    shadowOffset: { width: 1, height: 10 },
+                  }}
+                  name="person"
+                  color={
+                    isFocused
+                      ? colors.backgroundLightBlue
+                      : colors.backgroundLightGrey
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <Icon
+                  style={{
+                    fontSize: 56,
+                    alignSelf: "center",
+                    shadowOpacity: 0.25,
+                    elevation: 6,
+                    shadowRadius: 12,
+                    shadowOffset: { width: 1, height: 10 },
+                  }}
+                  name="bookmark"
+                  color={
+                    isFocused
+                      ? colors.backgroundLightBlue
+                      : colors.backgroundLightGrey
+                  }
+                />
+              </>
+            )}
           </TouchableOpacity>
         );
       })}
