@@ -9,7 +9,6 @@ import auth from "@react-native-firebase/auth";
 import { connect } from "react-redux";
 import { doSetUser } from "./redux/actions/User";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import TabBar from "./components/tabBar";
 
 //Screens
