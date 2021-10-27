@@ -1,4 +1,4 @@
-export const doSetUser = (user: any) => ({
-  type: 'SET_USER',
+export const doSetUser = (user: object) => ({
+  type: "SET_USER",
   payload: user,
 });

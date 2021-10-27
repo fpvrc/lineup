@@ -55,6 +55,7 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
 
         return (
           <TouchableOpacity
+            key={index}
             activeOpacity={1}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}

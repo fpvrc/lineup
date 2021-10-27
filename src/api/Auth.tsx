@@ -1,14 +1,30 @@
-import axios from 'axios';
-import config from '../lib/config.json';
-import auth from '@react-native-firebase/auth';
+import axios from "axios";
+import config from "../lib/config.json";
+import auth from "@react-native-firebase/auth";
 import {
   appleAuth,
   AppleButton,
-} from '@invertase/react-native-apple-authentication';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {LoginManager, AccessToken} from 'react-native-fbsdk-next';
+} from "@invertase/react-native-apple-authentication";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { LoginManager, AccessToken } from "react-native-fbsdk-next";
+import Realm from "realm";
 
-export const signInPhone = async phone_number => {
+export const connectGraph = async (user) => {
+  try {
+    let token = await user.getIdToken();
+    const appConfig = {
+      id: "application-0-opynp",
+      timeout: 10000,
+    };
+    const app = new Realm.App(appConfig);
+    const credentials = Realm.Credentials.jwt(token);
+    await app.logIn(credentials);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const signInPhone = async (phone_number) => {
   try {
     const confirmation = await auth().signInWithPhoneNumber(phone_number);
     return confirmation;
@@ -23,18 +39,17 @@ export const signInApple = async () => {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
     });
-    const {identityToken, nonce} = appleAuthRequestResponse;
+    const { identityToken, nonce } = appleAuthRequestResponse;
     if (identityToken) {
       const appleCredential = auth.AppleAuthProvider.credential(
         identityToken,
-        nonce,
+        nonce
       );
-      const userCredential = await auth().signInWithCredential(appleCredential);
+      await auth().signInWithCredential(appleCredential);
     } else {
-      throw new Error('Null token');
+      throw new Error("Null token");
     }
   } catch (error: any) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -42,13 +57,12 @@ export const signInApple = async () => {
 export const signInGoogle = async () => {
   try {
     GoogleSignin.configure({
-      webClientId: '',
+      webClientId: "",
     });
-    const {idToken} = await GoogleSignin.signIn();
+    const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    const userCredential = await auth().signInWithCredential(googleCredential);
+    await auth().signInWithCredential(googleCredential);
   } catch (error: any) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -56,24 +70,31 @@ export const signInGoogle = async () => {
 export const signInFacebook = async () => {
   try {
     const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
+      "public_profile",
+      "email",
     ]);
     if (result.isCancelled) {
-      throw 'User cancelled the login process';
+      throw "User cancelled the login process";
     }
     const data = await AccessToken.getCurrentAccessToken();
     if (!data) {
-      throw 'Something went wrong obtaining access token';
+      throw "Something went wrong obtaining access token";
     }
     const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
+      data.accessToken
     );
-    const userCredential = await auth().signInWithCredential(
-      facebookCredential,
-    );
+    await auth().signInWithCredential(facebookCredential);
   } catch (error: any) {
-    console.log(error);
+    throw new Error(error);
+  }
+};
+
+export const signInAnonymously = async () => {
+  try {
+    console.log("here");
+    await auth().signInAnonymously();
+  } catch (error: any) {
+    console.log(error.message);
     throw new Error(error);
   }
 };

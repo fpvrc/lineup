@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { doSetUser } from "./redux/actions/User";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBar from "./components/tabBar";
+import { doConnectGraph } from "./redux/actions/Auth";
+import { signInAnonymously } from "./api/Auth";
 
 //Screens
 import User from "./screens/user";
@@ -31,15 +33,26 @@ const Tabs: React.FC<{}> = ({}) => {
 };
 
 const MainStack = createNativeStackNavigator();
-const Navigation: React.FC<{ setUser: (user: object) => void }> = ({
-  setUser,
-}) => {
+const Navigation: React.FC<{
+  setUser: (user: object) => void;
+  connectGraph: (user: any) => void;
+}> = ({ setUser, connectGraph }) => {
   const scheme = useColorScheme();
   const routeNameRef = useRef() as any;
+  const initialRender = useRef(false) as any;
 
   const onAuthStateChanged = (user: any) => {
-    //console.log({...user});
-    setUser(user);
+    if (initialRender.current) {
+      if (user) {
+        setUser(user.toJSON());
+        connectGraph(user);
+      } else {
+        setUser(user);
+        signInAnonymously();
+      }
+    } else {
+      initialRender.current = true;
+    }
   };
 
   useEffect(() => {
@@ -87,6 +100,7 @@ const mapStateToProps = (state: object) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
   setUser: (user: object) => dispatch(doSetUser(user)),
+  connectGraph: (user: any) => dispatch(doConnectGraph(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
