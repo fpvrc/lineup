@@ -18,13 +18,18 @@ import Header from "../../components/header/";
 import Icon from "react-native-vector-icons/Ionicons";
 import { launchImageLibrary } from "react-native-image-picker";
 import FastImage from "react-native-fast-image";
+import { doAddMenu } from "../../redux/actions/Menus";
 
 const options = {
   mediaType: "photo",
   title: "Select an image",
 };
 
-const NewMenu: React.FC<{ navigation: any }> = ({ navigation }) => {
+const NewMenu: React.FC<{
+  navigation: any;
+  addMenu: (uid: string, text: string, photoUri: string) => void;
+  uid: string;
+}> = ({ navigation, uid, addMenu }) => {
   const { colors, fonts } = useTheme() as any;
   const inputRef = useRef() as any;
   const [text, setText] = useState("");
@@ -39,7 +44,7 @@ const NewMenu: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const goNewMenu = () => navigation.navigate("NewMenu");
   const goBack = () => navigation.goBack();
-  const goAdd = () => console.log("Go Add");
+  const goAdd = () => addMenu(uid, text, photoUri);
 
   const addPhoto = async () => {
     try {
@@ -169,9 +174,15 @@ const NewMenu: React.FC<{ navigation: any }> = ({ navigation }) => {
   );
 };
 
-const mapStateToProps = (state: object) => ({});
+const mapStateToProps = (state) => ({
+  uid: state.user.user.uid,
+  token: state.auth.token,
+});
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  addMenu: (uid, menu_name, photo_uri) =>
+    dispatch(doAddMenu(uid, menu_name, photo_uri)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMenu);
 

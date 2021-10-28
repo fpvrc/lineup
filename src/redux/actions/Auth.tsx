@@ -1,6 +1,6 @@
 import { logout, connectGraph } from "../../api/Auth";
 
-export const doConnectGraph = (user: any) => ({
+export const doConnectGraph = (user) => ({
   type: "CONNECT_GRAPH",
   payload: connectGraph(user),
 });

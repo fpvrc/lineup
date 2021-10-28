@@ -1,8 +1,9 @@
 const initialState = {
   graph_authenticated: false,
+  token: "",
 };
 
-export default function userReducer(
+export default function authReducer(
   state = initialState,
   action: { type: string; payload: any }
 ) {
@@ -10,7 +11,8 @@ export default function userReducer(
     case "CONNECT_GRAPH_FULFILLED":
       return {
         ...state,
-        graph_authenticated: action.payload,
+        graph_authenticated: true,
+        token: action.payload,
       };
     case "CONNECT_GRAPH_REJECTED":
       return {

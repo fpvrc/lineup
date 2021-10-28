@@ -19,6 +19,8 @@ export const connectGraph = async (user) => {
     const app = new Realm.App(appConfig);
     const credentials = Realm.Credentials.jwt(token);
     await app.logIn(credentials);
+    axios.defaults.headers.common.jwtTokenString = token;
+    return token;
   } catch (error: any) {
     throw new Error(error.message);
   }
@@ -91,7 +93,6 @@ export const signInFacebook = async () => {
 
 export const signInAnonymously = async () => {
   try {
-    console.log("here");
     await auth().signInAnonymously();
   } catch (error: any) {
     console.log(error.message);

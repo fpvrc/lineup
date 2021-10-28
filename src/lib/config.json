@@ -1,4 +1,4 @@
 {
-  "URL": "http://localhost:5000/",
-  "GRAPH": "https://us-east-1.aws.realm.mongodb.com/api/client/v2.0/app/application-0-opynp/graphql"
+  "GRAPH": "https://us-east-1.aws.realm.mongodb.com/api/client/v2.0/app/application-0-opynp/graphql",
+  "URL": "http://localhost:5000/"
 }
