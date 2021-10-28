@@ -12,7 +12,6 @@ export default function authReducer(
       return {
         ...state,
         graph_authenticated: true,
-        token: action.payload,
       };
     case "CONNECT_GRAPH_REJECTED":
       return {

@@ -1,12 +1,12 @@
-export const menu_upload = (group_id: string, messageID: string) => {
+export const menu_upload = (muid: string) => {
   let options = {
-    keyPrefix: `rightnow/${group_id}/${messageID}/`,
-    bucket: 'denmedia',
-    region: 'us-east-1',
-    accessKey: 'AKIAQTJ6PNP2I4SO3SET',
-    secretKey: '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',
+    keyPrefix: `menus/${muid}/`,
+    bucket: "octiblemedia",
+    region: "us-west-1",
+    accessKey: "AKIA4HZOXY7WXEHTRQY6",
+    secretKey: "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",
     successActionStatus: 201,
-    accelerate_url: 'https://denmedia.s3-accelerate.amazonaws.com',
+    accelerate_url: "https://octiblemedia.s3-accelerate.amazonaws.com",
   };
   return options;
 };

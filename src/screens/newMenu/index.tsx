@@ -6,6 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -18,7 +20,10 @@ import Header from "../../components/header/";
 import Icon from "react-native-vector-icons/Ionicons";
 import { launchImageLibrary } from "react-native-image-picker";
 import FastImage from "react-native-fast-image";
-import { doAddMenu } from "../../redux/actions/Menus";
+import { doAddMenu, doInstantRender } from "../../redux/actions/Menus";
+import { idGenerator } from "../../api/Workers";
+import AddSection from "./AddSection";
+import AddItem from "./AddItem";
 
 const options = {
   mediaType: "photo",
@@ -27,24 +32,51 @@ const options = {
 
 const NewMenu: React.FC<{
   navigation: any;
-  addMenu: (uid: string, text: string, photoUri: string) => void;
+  addMenu: (uid: string, formData: object) => void;
+  instantRender: (menu: object) => void;
   uid: string;
-}> = ({ navigation, uid, addMenu }) => {
+}> = ({ navigation, uid, addMenu, instantRender }) => {
   const { colors, fonts } = useTheme() as any;
   const inputRef = useRef() as any;
-  const [text, setText] = useState("");
-  const [photoUri, setPhotoUri] = useState("") as any;
+  const [modals, setModals] = useState("");
+  const [formData, setFormData] = useState({
+    muid: idGenerator(),
+    menu_name: "",
+    main_photo: "",
+    sections: [],
+    items: [],
+  }) as any;
+
   const changeText = (new_text: string) => {
-    setText(new_text);
+    setFormData((prevState) => ({
+      ...prevState,
+      menu_name: new_text,
+    }));
   };
 
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+  const addSection = (section) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      sections: [...prevState.sections, section],
+    }));
+  };
+  const addItem = (item) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      items: [...prevState.items, item],
+    }));
+  };
 
-  const goNewMenu = () => navigation.navigate("NewMenu");
   const goBack = () => navigation.goBack();
-  const goAdd = () => addMenu(uid, text, photoUri);
+  const goAdd = () => {
+    instantRender(formData);
+    addMenu(uid, formData);
+    navigation.goBack();
+  };
+
+  const openSection = () => setModals("section");
+  const openItem = () => setModals("item");
+  const closeModal = () => setModals("");
 
   const addPhoto = async () => {
     try {
@@ -61,11 +93,18 @@ const NewMenu: React.FC<{
         });
       });
       let uri = await promise;
-      setPhotoUri(uri);
+      setFormData((prevState) => ({
+        ...prevState,
+        main_photo: uri,
+      }));
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -107,12 +146,16 @@ const NewMenu: React.FC<{
       >
         Menu Photo
       </Text>
-      {photoUri ? (
+      {formData.main_photo ? (
         <TouchableOpacity
           style={{
             marginTop: hp("1%"),
             marginLeft: wp("4%"),
             marginRight: wp("4%"),
+            shadowOpacity: 0.25,
+            elevation: 6,
+            shadowRadius: 12,
+            shadowOffset: { width: 1, height: 10 },
           }}
           onPress={addPhoto}
           activeOpacity={1}
@@ -124,7 +167,7 @@ const NewMenu: React.FC<{
               borderRadius: wp("5%"),
             }}
             source={{
-              uri: photoUri,
+              uri: formData.main_photo,
               priority: FastImage.priority.low,
             }}
           />
@@ -141,6 +184,10 @@ const NewMenu: React.FC<{
             marginRight: wp("4%"),
             height: hp("24%"),
             borderRadius: wp("5%"),
+            shadowOpacity: 0.25,
+            elevation: 6,
+            shadowRadius: 12,
+            shadowOffset: { width: 1, height: 10 },
           }}
         >
           <Icon
@@ -157,6 +204,46 @@ const NewMenu: React.FC<{
           />
         </TouchableOpacity>
       )}
+      <Text
+        style={{
+          fontSize: 14,
+          fontFamily: fonts.regular,
+          color: colors.primaryBlack,
+          marginTop: hp("3%"),
+          marginLeft: wp("4%"),
+        }}
+      >
+        {`Sections (${formData.sections.length})`}
+      </Text>
+      <Button
+        onPress={openSection}
+        backgroundColor={colors.backgroundLightGrey}
+        textColor={colors.backgroundBlack}
+        text={`Add Section`}
+        icon={null}
+        activeOpacity={1}
+        styles={{ alignSelf: "center", marginTop: hp("1%") }}
+      />
+      <Text
+        style={{
+          fontSize: 14,
+          fontFamily: fonts.regular,
+          color: colors.primaryBlack,
+          marginTop: hp("3%"),
+          marginLeft: wp("4%"),
+        }}
+      >
+        {`Items (${formData.items.length})`}
+      </Text>
+      <Button
+        onPress={openItem}
+        backgroundColor={colors.backgroundLightGrey}
+        textColor={colors.backgroundBlack}
+        text={"Add Item"}
+        icon={null}
+        activeOpacity={1}
+        styles={{ alignSelf: "center", marginTop: hp("2%") }}
+      />
       <Button
         onPress={goAdd}
         backgroundColor={colors.backgroundLightBlue}
@@ -170,6 +257,18 @@ const NewMenu: React.FC<{
           position: "absolute",
         }}
       />
+      <AddSection
+        closeModal={closeModal}
+        addSection={addSection}
+        sections={formData.sections}
+        isOpen={modals === "section" ? true : false}
+      />
+      <AddItem
+        closeModal={closeModal}
+        addItem={addItem}
+        items={formData.items}
+        isOpen={modals === "item" ? true : false}
+      />
     </View>
   );
 };
@@ -180,8 +279,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addMenu: (uid, menu_name, photo_uri) =>
-    dispatch(doAddMenu(uid, menu_name, photo_uri)),
+  addMenu: (uid, formData) => dispatch(doAddMenu(uid, formData)),
+  instantRender: (menu) => dispatch(doInstantRender(menu)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewMenu);

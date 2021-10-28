@@ -20,7 +20,7 @@ export const connectGraph = async (user) => {
     const credentials = Realm.Credentials.jwt(token);
     await app.logIn(credentials);
     axios.defaults.headers.common.jwtTokenString = token;
-    return token;
+    return;
   } catch (error: any) {
     throw new Error(error.message);
   }

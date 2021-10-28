@@ -18,6 +18,7 @@ import User from "./screens/user";
 import SignInPhone from "./screens/signInPhone";
 import Content from "./screens/content";
 import NewMenu from "./screens/newMenu";
+import { doGetMyMenus } from "./redux/actions/Menus";
 
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
@@ -36,7 +37,10 @@ const MainStack = createNativeStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
-}> = ({ setUser, connectGraph }) => {
+  getMyMenus: (uid: string) => void;
+  graph_authenticated: boolean;
+  uid: string;
+}> = ({ setUser, connectGraph, graph_authenticated, uid, getMyMenus }) => {
   const scheme = useColorScheme();
   const routeNameRef = useRef() as any;
   const initialRender = useRef(false) as any;
@@ -59,6 +63,12 @@ const Navigation: React.FC<{
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
+
+  useEffect(() => {
+    if (graph_authenticated) {
+      getMyMenus(uid);
+    }
+  }, [graph_authenticated]);
 
   const readyUp = () => {
     routeNameRef.current = navigationRef!.current!.getCurrentRoute()!.name;
@@ -96,11 +106,15 @@ const Navigation: React.FC<{
   );
 };
 
-const mapStateToProps = (state: object) => ({});
+const mapStateToProps = (state: any) => ({
+  uid: state.user.user?.uid,
+  graph_authenticated: state.auth.graph_authenticated,
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setUser: (user: object) => dispatch(doSetUser(user)),
-  connectGraph: (user: any) => dispatch(doConnectGraph(user)),
+  setUser: (user) => dispatch(doSetUser(user)),
+  connectGraph: (user) => dispatch(doConnectGraph(user)),
+  getMyMenus: (uid) => dispatch(doGetMyMenus(uid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
