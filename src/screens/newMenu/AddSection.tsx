@@ -7,6 +7,8 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -51,6 +53,8 @@ const AddSection: React.FC<{
     setText("");
   };
 
+  const closeKeyboard = () => Keyboard.dismiss();
+
   useEffect(() => {
     if (modals === "section") {
       inputRef.current.focus();
@@ -92,116 +96,111 @@ const AddSection: React.FC<{
       animationIn={"fadeIn"}
       animationOut={"fadeOut"}
     >
-      <View
-        style={{
-          alignSelf: "center",
-          width: wp("92%"),
-          height: hp("50%"),
-          backgroundColor: colors.backgroundPurple,
-          borderRadius: wp("5%"),
-        }}
-      >
-        <Text
+      <TouchableWithoutFeedback onPress={closeKeyboard}>
+        <View
           style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: error ? "red" : colors.primaryGrey,
-            marginTop: hp("5%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Section Name
-        </Text>
-        <TextInput
-          ref={inputRef as any}
-          keyboardType="default"
-          value={text}
-          keyboardAppearance={"light"}
-          onChangeText={changeText}
-          selectionColor={colors.primaryGrey}
-          placeholder={"Entres"}
-          style={{
-            marginTop: hp(".5%"),
-            height: wp("7%"),
-            fontSize: 24,
-            fontFamily: fonts.regular,
-            marginLeft: wp("4%"),
-            color: colors.primaryGrey,
-          }}
-        />
-        <Button
-          onPress={goSave}
-          backgroundColor={colors.primaryGreen}
-          textColor={colors.backgroundBlack}
-          text={"Add Section"}
-          icon={null}
-          activeOpacity={1}
-          styles={{
-            width: wp("50%"),
-            marginLeft: wp("4%"),
-            marginTop: hp("2%"),
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-            marginLeft: wp("4%"),
-            marginTop: hp("3.5%"),
-          }}
-        >
-          {`Sections (${sections.length})`}
-        </Text>
-        <FlatList
-          data={sections}
-          keyExtractor={getKeys}
-          renderItem={renderSection}
-          style={{ maxHeight: hp("25%") }}
-          contentContainerStyle={{
-            marginLeft: wp("4%"),
-            marginRight: wp("4%"),
-            marginTop: hp("1%"),
-          }}
-        />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={closeModal}
-          style={{
-            width: wp("15%"),
-            height: wp("15%"),
-            backgroundColor: colors.primaryGreen,
-            justifyContent: "center",
-            borderRadius: wp("10%"),
             alignSelf: "center",
-            position: "absolute",
-            bottom: hp("-3.5%"),
-            shadowOpacity: 0.25,
-            elevation: 6,
-            shadowRadius: 12,
-            shadowOffset: { width: 1, height: 10 },
+            width: wp("92%"),
+            height: hp("50%"),
+            backgroundColor: colors.backgroundPurple,
+            borderRadius: wp("5%"),
           }}
         >
-          <Icon
+          <Text
             style={{
-              fontSize: 26,
-              alignSelf: "center",
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: error ? "red" : colors.primaryGrey,
+              marginTop: hp("5%"),
+              marginLeft: wp("4%"),
             }}
-            name="close"
-            color={colors.backgroundBlack}
+          >
+            Section Name
+          </Text>
+          <TextInput
+            ref={inputRef as any}
+            keyboardType="default"
+            value={text}
+            keyboardAppearance={"light"}
+            onChangeText={changeText}
+            selectionColor={colors.primaryGrey}
+            placeholder={"Entres"}
+            style={{
+              marginTop: hp(".5%"),
+              height: wp("7%"),
+              fontSize: 24,
+              fontFamily: fonts.regular,
+              marginLeft: wp("4%"),
+              color: colors.primaryGrey,
+            }}
           />
-        </TouchableOpacity>
-      </View>
+          <Button
+            onPress={goSave}
+            backgroundColor={colors.primaryGreen}
+            textColor={colors.backgroundBlack}
+            text={"Add Section"}
+            icon={null}
+            activeOpacity={1}
+            styles={{
+              width: wp("50%"),
+              marginLeft: wp("4%"),
+              marginTop: hp("2%"),
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: colors.primaryGrey,
+              marginLeft: wp("4%"),
+              marginTop: hp("3.5%"),
+            }}
+          >
+            {`Sections (${sections.length})`}
+          </Text>
+          <FlatList
+            data={sections}
+            keyExtractor={getKeys}
+            renderItem={renderSection}
+            style={{ maxHeight: hp("25%") }}
+            contentContainerStyle={{
+              marginLeft: wp("4%"),
+              marginRight: wp("4%"),
+              marginTop: hp("1%"),
+            }}
+          />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={closeModal}
+            style={{
+              width: wp("15%"),
+              height: wp("15%"),
+              backgroundColor: colors.primaryGreen,
+              justifyContent: "center",
+              borderRadius: wp("10%"),
+              alignSelf: "center",
+              position: "absolute",
+              bottom: hp("-3.5%"),
+              shadowOpacity: 0.25,
+              elevation: 6,
+              shadowRadius: 12,
+              shadowOffset: { width: 1, height: 10 },
+            }}
+          >
+            <Icon
+              style={{
+                fontSize: 26,
+                alignSelf: "center",
+              }}
+              name="close"
+              color={colors.backgroundBlack}
+            />
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
-
-/*
-    setSections((prevState) => [
-      { id: idGenerator(), section: text },
-      ...prevState,
-    ]);
-    */
 
 const mapStateToProps = (state: object) => ({});
 

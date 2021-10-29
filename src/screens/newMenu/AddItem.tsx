@@ -8,6 +8,8 @@ import {
   FlatList,
   Alert,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -129,6 +131,8 @@ const AddItem: React.FC<{
     }
   }, [modals]);
 
+  const closeKeyboard = () => Keyboard.dismiss();
+
   const renderItem = ({ item }) => {
     return (
       <View
@@ -164,270 +168,272 @@ const AddItem: React.FC<{
       animationIn={"fadeIn"}
       animationOut={"fadeOut"}
     >
-      <View
-        style={{
-          alignSelf: "center",
-          width: wp("92%"),
-          height: hp("90%"),
-          backgroundColor: colors.backgroundPurple,
-          borderRadius: wp("5%"),
-        }}
-      >
-        <Text
+      <TouchableWithoutFeedback onPress={closeKeyboard}>
+        <View
           style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: error
-              ? !formData.title
-                ? "red"
-                : colors.primaryGrey
-              : colors.primaryGrey,
-            marginTop: hp("5%"),
-            marginLeft: wp("4%"),
+            alignSelf: "center",
+            width: wp("92%"),
+            height: hp("90%"),
+            backgroundColor: colors.backgroundPurple,
+            borderRadius: wp("5%"),
           }}
         >
-          Title
-        </Text>
-        <TextInput
-          ref={inputRef as any}
-          keyboardType="default"
-          value={formData.title}
-          keyboardAppearance={"light"}
-          onChangeText={changeTitle}
-          selectionColor={colors.primaryGrey}
-          placeholder={"Steak"}
-          style={{
-            marginTop: hp(".5%"),
-            height: wp("7%"),
-            fontSize: 24,
-            fontFamily: fonts.regular,
-            marginLeft: wp("4%"),
-            color: colors.primaryGrey,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: error
-              ? !formData.sub_title
-                ? "red"
-                : colors.primaryGrey
-              : colors.primaryGrey,
-            marginTop: hp("2%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Subtitle
-        </Text>
-        <TextInput
-          ref={inputRef2 as any}
-          keyboardType="default"
-          value={formData.sub_title}
-          keyboardAppearance={"light"}
-          onChangeText={changeSubTitle}
-          selectionColor={colors.primaryGrey}
-          placeholder={"Local steak"}
-          style={{
-            marginTop: hp(".5%"),
-            height: wp("7%"),
-            fontSize: 24,
-            fontFamily: fonts.regular,
-            marginLeft: wp("4%"),
-            color: colors.primaryGrey,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: error
-              ? !formData.price
-                ? "red"
-                : colors.primaryGrey
-              : colors.primaryGrey,
-            marginTop: hp("2%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Price
-        </Text>
-        <TextInput
-          ref={inputRef3 as any}
-          keyboardType="default"
-          value={formData.price}
-          keyboardAppearance={"light"}
-          onChangeText={changePrice}
-          selectionColor={colors.primaryGrey}
-          placeholder={"$29.99"}
-          style={{
-            marginTop: hp(".5%"),
-            height: wp("7%"),
-            fontSize: 24,
-            fontFamily: fonts.regular,
-            marginLeft: wp("4%"),
-            color: colors.primaryGrey,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-            marginTop: hp("2%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Section
-        </Text>
-        <Picker
-          selectedValue={formData.section}
-          mode="dialog"
-          enabled={true}
-          style={{
-            height: hp("10%"),
-            width: wp("60%"),
-          }}
-          itemStyle={{
-            height: hp("13%"),
-            marginTop: hp("-2.8%"),
-            marginLeft: wp("1.5%"),
-          }}
-          onValueChange={updatePicker}
-        >
-          {sections.map((section) => (
-            <Picker.Item
-              label={`${section.title}`}
-              value={`${section.title}`}
-            />
-          ))}
-        </Picker>
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-            marginTop: hp("-1.5%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Photo
-        </Text>
-        {formData.photo ? (
-          <TouchableOpacity
+          <Text
             style={{
-              marginTop: hp("1%"),
-              width: wp("30%"),
-              height: wp("30%"),
-              borderRadius: wp("5%"),
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: error
+                ? !formData.title
+                  ? "red"
+                  : colors.primaryGrey
+                : colors.primaryGrey,
+              marginTop: hp("5%"),
               marginLeft: wp("4%"),
             }}
-            onPress={addPhoto}
-            activeOpacity={1}
           >
-            <FastImage
+            Title
+          </Text>
+          <TextInput
+            ref={inputRef as any}
+            keyboardType="default"
+            value={formData.title}
+            keyboardAppearance={"light"}
+            onChangeText={changeTitle}
+            selectionColor={colors.primaryGrey}
+            placeholder={"Steak"}
+            style={{
+              marginTop: hp(".5%"),
+              height: wp("7%"),
+              fontSize: 24,
+              fontFamily: fonts.regular,
+              marginLeft: wp("4%"),
+              color: colors.primaryGrey,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: error
+                ? !formData.sub_title
+                  ? "red"
+                  : colors.primaryGrey
+                : colors.primaryGrey,
+              marginTop: hp("2%"),
+              marginLeft: wp("4%"),
+            }}
+          >
+            Subtitle
+          </Text>
+          <TextInput
+            ref={inputRef2 as any}
+            keyboardType="default"
+            value={formData.sub_title}
+            keyboardAppearance={"light"}
+            onChangeText={changeSubTitle}
+            selectionColor={colors.primaryGrey}
+            placeholder={"Local steak"}
+            style={{
+              marginTop: hp(".5%"),
+              height: wp("7%"),
+              fontSize: 24,
+              fontFamily: fonts.regular,
+              marginLeft: wp("4%"),
+              color: colors.primaryGrey,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: error
+                ? !formData.price
+                  ? "red"
+                  : colors.primaryGrey
+                : colors.primaryGrey,
+              marginTop: hp("2%"),
+              marginLeft: wp("4%"),
+            }}
+          >
+            Price
+          </Text>
+          <TextInput
+            ref={inputRef3 as any}
+            keyboardType="default"
+            value={formData.price}
+            keyboardAppearance={"light"}
+            onChangeText={changePrice}
+            selectionColor={colors.primaryGrey}
+            placeholder={"$29.99"}
+            style={{
+              marginTop: hp(".5%"),
+              height: wp("7%"),
+              fontSize: 24,
+              fontFamily: fonts.regular,
+              marginLeft: wp("4%"),
+              color: colors.primaryGrey,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: colors.primaryGrey,
+              marginTop: hp("2%"),
+              marginLeft: wp("4%"),
+            }}
+          >
+            Section
+          </Text>
+          <Picker
+            selectedValue={formData.section}
+            mode="dialog"
+            enabled={true}
+            style={{
+              height: hp("10%"),
+              width: wp("60%"),
+            }}
+            itemStyle={{
+              height: hp("13%"),
+              marginTop: hp("-2.8%"),
+              marginLeft: wp("1.5%"),
+            }}
+            onValueChange={updatePicker}
+          >
+            {sections.map((section) => (
+              <Picker.Item
+                label={`${section.title}`}
+                value={`${section.title}`}
+              />
+            ))}
+          </Picker>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: colors.primaryGrey,
+              marginTop: hp("-1.5%"),
+              marginLeft: wp("4%"),
+            }}
+          >
+            Photo
+          </Text>
+          {formData.photo ? (
+            <TouchableOpacity
               style={{
+                marginTop: hp("1%"),
                 width: wp("30%"),
                 height: wp("30%"),
                 borderRadius: wp("5%"),
+                marginLeft: wp("4%"),
               }}
-              source={{
-                uri: formData.photo,
-                priority: FastImage.priority.low,
+              onPress={addPhoto}
+              activeOpacity={1}
+            >
+              <FastImage
+                style={{
+                  width: wp("30%"),
+                  height: wp("30%"),
+                  borderRadius: wp("5%"),
+                }}
+                source={{
+                  uri: formData.photo,
+                  priority: FastImage.priority.low,
+                }}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={addPhoto}
+              activeOpacity={1}
+              style={{
+                backgroundColor: colors.backgroundLightBlue,
+                justifyContent: "center",
+                marginTop: hp("1%"),
+                width: wp("30%"),
+                height: wp("30%"),
+                borderRadius: wp("5%"),
+                marginLeft: wp("4%"),
               }}
-            />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={addPhoto}
+            >
+              <Icon
+                style={{
+                  fontSize: 64,
+                  alignSelf: "center",
+                  shadowOpacity: 0.25,
+                  elevation: 6,
+                  shadowRadius: 12,
+                  shadowOffset: { width: 1, height: 10 },
+                }}
+                name="add"
+                color={colors.backgroundBlack}
+              />
+            </TouchableOpacity>
+          )}
+          <Button
+            onPress={goSave}
+            backgroundColor={colors.primaryGreen}
+            textColor={colors.backgroundBlack}
+            text={"Add Item"}
+            icon={null}
             activeOpacity={1}
-            style={{
-              backgroundColor: colors.backgroundLightBlue,
-              justifyContent: "center",
-              marginTop: hp("1%"),
-              width: wp("30%"),
-              height: wp("30%"),
-              borderRadius: wp("5%"),
+            styles={{
+              width: wp("50%"),
               marginLeft: wp("4%"),
+              marginTop: hp("3%"),
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.regular,
+              color: colors.primaryGrey,
+              marginLeft: wp("4%"),
+              marginTop: hp("3%"),
+            }}
+          >
+            {`Items (${items.length})`}
+          </Text>
+          <FlatList
+            data={items}
+            keyExtractor={getKeys}
+            renderItem={renderItem}
+            style={{ maxHeight: hp("25%") }}
+            contentContainerStyle={{
+              marginLeft: wp("4%"),
+              marginRight: wp("4%"),
+              marginTop: hp("1%"),
+            }}
+          />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={closeModal}
+            style={{
+              width: wp("15%"),
+              height: wp("15%"),
+              backgroundColor: colors.primaryGreen,
+              justifyContent: "center",
+              borderRadius: wp("10%"),
+              alignSelf: "center",
+              position: "absolute",
+              bottom: hp("-3.5%"),
+              shadowOpacity: 0.25,
+              elevation: 6,
+              shadowRadius: 12,
+              shadowOffset: { width: 1, height: 10 },
             }}
           >
             <Icon
               style={{
-                fontSize: 64,
+                fontSize: 26,
                 alignSelf: "center",
-                shadowOpacity: 0.25,
-                elevation: 6,
-                shadowRadius: 12,
-                shadowOffset: { width: 1, height: 10 },
               }}
-              name="add"
+              name="close"
               color={colors.backgroundBlack}
             />
           </TouchableOpacity>
-        )}
-        <Button
-          onPress={goSave}
-          backgroundColor={colors.primaryGreen}
-          textColor={colors.backgroundBlack}
-          text={"Add Item"}
-          icon={null}
-          activeOpacity={1}
-          styles={{
-            width: wp("50%"),
-            marginLeft: wp("4%"),
-            marginTop: hp("3%"),
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-            marginLeft: wp("4%"),
-            marginTop: hp("3%"),
-          }}
-        >
-          {`Items (${items.length})`}
-        </Text>
-        <FlatList
-          data={items}
-          keyExtractor={getKeys}
-          renderItem={renderItem}
-          style={{ maxHeight: hp("25%") }}
-          contentContainerStyle={{
-            marginLeft: wp("4%"),
-            marginRight: wp("4%"),
-            marginTop: hp("1%"),
-          }}
-        />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={closeModal}
-          style={{
-            width: wp("15%"),
-            height: wp("15%"),
-            backgroundColor: colors.primaryGreen,
-            justifyContent: "center",
-            borderRadius: wp("10%"),
-            alignSelf: "center",
-            position: "absolute",
-            bottom: hp("-3.5%"),
-            shadowOpacity: 0.25,
-            elevation: 6,
-            shadowRadius: 12,
-            shadowOffset: { width: 1, height: 10 },
-          }}
-        >
-          <Icon
-            style={{
-              fontSize: 26,
-              alignSelf: "center",
-            }}
-            name="close"
-            color={colors.backgroundBlack}
-          />
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
