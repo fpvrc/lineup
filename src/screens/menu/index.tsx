@@ -150,7 +150,7 @@ const Menu: React.FC<{
           alignSelf: "center",
         }}
       >
-        {active_menu.menu_name}
+        {active_menu?.menu_name}
       </Text>
       {active_menu?.sections.map((section) => (
         <View>
