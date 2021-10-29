@@ -168,6 +168,7 @@ const SignInPhone: React.FC<{
         </View>
         {loading === "phone_number" ? (
           <ProgressBar
+            style={{ position: "absolute", marginTop: hp("12.2%") }}
             indeterminate={true}
             width={wp("92%")}
             borderWidth={0}

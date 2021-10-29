@@ -17,6 +17,7 @@ import { signInAnonymously } from "./api/Auth";
 import User from "./screens/user";
 import SignInPhone from "./screens/signInPhone";
 import Content from "./screens/content";
+import Feed from "./screens/feed";
 import NewMenu from "./screens/newMenu";
 import { doGetMyMenus } from "./redux/actions/Menus";
 
@@ -29,6 +30,7 @@ const Tabs: React.FC<{}> = ({}) => {
     >
       <Tab.Screen name="User" component={User} />
       <Tab.Screen name="Content" component={Content} />
+      <Tab.Screen name="Feed" component={Feed} />
     </Tab.Navigator>
   );
 };

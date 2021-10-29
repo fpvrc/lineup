@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
   FlatList,
   ScrollView,
 } from "react-native";
@@ -39,6 +40,7 @@ const NewMenu: React.FC<{
   const { colors, fonts } = useTheme() as any;
   const inputRef = useRef() as any;
   const [modals, setModals] = useState("");
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useState({
     muid: idGenerator(),
     menu_name: "",
@@ -69,13 +71,23 @@ const NewMenu: React.FC<{
 
   const goBack = () => navigation.goBack();
   const goAdd = () => {
-    instantRender(formData);
-    addMenu(uid, formData);
-    navigation.goBack();
+    if (!formData.menu_name) {
+      setError(true);
+    } else {
+      instantRender(formData);
+      addMenu(uid, formData);
+      navigation.goBack();
+    }
   };
 
   const openSection = () => setModals("section");
-  const openItem = () => setModals("item");
+  const openItem = () => {
+    if (!formData.sections.length) {
+      Alert.alert("1 Section Required");
+    } else {
+      setModals("item");
+    }
+  };
   const closeModal = () => setModals("");
 
   const addPhoto = async () => {
@@ -113,7 +125,7 @@ const NewMenu: React.FC<{
         style={{
           fontSize: 14,
           fontFamily: fonts.regular,
-          color: colors.primaryBlack,
+          color: error ? "red" : colors.primaryBlack,
           marginTop: hp("5%"),
           marginLeft: wp("4%"),
         }}
@@ -262,12 +274,15 @@ const NewMenu: React.FC<{
         addSection={addSection}
         sections={formData.sections}
         isOpen={modals === "section" ? true : false}
+        modals={modals}
       />
       <AddItem
         closeModal={closeModal}
         addItem={addItem}
         items={formData.items}
+        sections={formData.sections}
         isOpen={modals === "item" ? true : false}
+        modals={modals}
       />
     </View>
   );

@@ -7,6 +7,7 @@ import {
   Text,
   FlatList,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -17,33 +18,119 @@ import {
 import Modal from "react-native-modal";
 import Button from "../../components/buttons/regular";
 import { idGenerator } from "../../api/Workers";
+import { Picker } from "@react-native-picker/picker";
+import Icon from "react-native-vector-icons/Ionicons";
+import FastImage from "react-native-fast-image";
+import { launchImageLibrary } from "react-native-image-picker";
+import { uploadItemPhoto } from "../../api/Menus";
+
+const options = {
+  mediaType: "photo",
+  title: "Select an image",
+};
 
 const AddItem: React.FC<{
   isOpen: boolean;
   closeModal: () => void;
   addItem: (item: object) => void;
   items: any;
-}> = ({ isOpen, closeModal, addItem, items }) => {
+  sections: any;
+  modals: string;
+}> = ({ isOpen, closeModal, addItem, items, modals, sections }) => {
   const { colors, fonts } = useTheme() as any;
   const inputRef = useRef() as any;
-  const [text, setText] = useState("");
+  const inputRef2 = useRef() as any;
+  const inputRef3 = useRef() as any;
+  const [error, setError] = useState(false);
+  const [formData, setFormData] = useState({
+    id: idGenerator(),
+    title: "",
+    sub_title: "",
+    photo: "",
+    price: "",
+    section: "",
+  }) as any;
 
-  const changeText = (text) => setText(text);
+  const changeTitle = (text) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      title: text,
+    }));
+  const changeSubTitle = (text) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      sub_title: text,
+    }));
+  const changePrice = (text) =>
+    setFormData((prevState) => ({
+      ...prevState,
+      price: text,
+    }));
+
   const getKeys = (item: any) => item.id;
   const goSave = () => {
-    if (!text.length) return;
-    addItem({ id: idGenerator(), section: text });
-    /*
-    setSections((prevState) => [
-      { id: idGenerator(), section: text },
-      ...prevState,
-    ]);
-    */
-    setText("");
-    return;
+    if (!formData.title || !formData.sub_title || !formData.price) {
+      setError(true);
+    } else {
+      addItem(formData);
+      setFormData((prevState) => ({
+        id: idGenerator(),
+        title: "",
+        sub_title: "",
+        photo: "",
+        price: "",
+        section: prevState.section,
+      }));
+      if (error) {
+        setError(false);
+      }
+    }
   };
 
-  const renderSection = ({ item }) => {
+  const updatePicker = (itemValue, index) => {
+    console.log(index);
+    setFormData((prevState) => ({
+      ...prevState,
+      section: sections[index].title,
+    }));
+  };
+
+  const addPhoto = async () => {
+    try {
+      const promise = new Promise((resolve, reject) => {
+        launchImageLibrary(options as any, (res: any) => {
+          if (res.didCancel) {
+            reject(new Error("User cancelled image picker"));
+          } else if (res.errorMessage) {
+            reject(new Error(res.errorMessage));
+          } else {
+            const source = res.assets[0]?.uri;
+            resolve(source);
+          }
+        });
+      });
+      let uri = await promise;
+      setFormData((prevState) => ({
+        ...prevState,
+        photo: uri,
+      }));
+      uploadItemPhoto(formData.id, uri);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (modals === "item") {
+      inputRef.current.focus();
+      setFormData((prevState) => ({
+        ...prevState,
+        section: sections.length ? sections[0].title : "",
+      }));
+    }
+  }, [modals]);
+
+  const renderItem = ({ item }) => {
     return (
       <View
         style={{
@@ -63,7 +150,7 @@ const AddItem: React.FC<{
             color: colors.primaryBlack,
           }}
         >
-          {item.section}
+          {item.title}
         </Text>
       </View>
     );
@@ -82,7 +169,7 @@ const AddItem: React.FC<{
         style={{
           alignSelf: "center",
           width: wp("92%"),
-          height: hp("50%"),
+          height: hp("90%"),
           backgroundColor: colors.backgroundWhite,
           borderRadius: wp("5%"),
         }}
@@ -91,40 +178,202 @@ const AddItem: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: error
+              ? !formData.title
+                ? "red"
+                : colors.backgroundBlack
+              : colors.backgroundBlack,
             marginTop: hp("5%"),
             marginLeft: wp("4%"),
           }}
         >
-          Section Name
+          Title
         </Text>
         <TextInput
           ref={inputRef as any}
           keyboardType="default"
-          value={text}
+          value={formData.title}
           keyboardAppearance={"light"}
-          onChangeText={changeText}
+          onChangeText={changeTitle}
           selectionColor={colors.backgroundBlack}
-          placeholder={"Entres"}
+          placeholder={"Steak"}
           style={{
-            marginTop: hp("1%"),
+            marginTop: hp(".5%"),
             height: wp("7%"),
             fontSize: 24,
             fontFamily: fonts.regular,
             marginLeft: wp("4%"),
           }}
         />
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: error
+              ? !formData.sub_title
+                ? "red"
+                : colors.backgroundBlack
+              : colors.backgroundBlack,
+            marginTop: hp("2%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Subtitle
+        </Text>
+        <TextInput
+          ref={inputRef2 as any}
+          keyboardType="default"
+          value={formData.sub_title}
+          keyboardAppearance={"light"}
+          onChangeText={changeSubTitle}
+          selectionColor={colors.backgroundBlack}
+          placeholder={"Local steak"}
+          style={{
+            marginTop: hp(".5%"),
+            height: wp("7%"),
+            fontSize: 24,
+            fontFamily: fonts.regular,
+            marginLeft: wp("4%"),
+          }}
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: error
+              ? !formData.price
+                ? "red"
+                : colors.backgroundBlack
+              : colors.backgroundBlack,
+            marginTop: hp("2%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Price
+        </Text>
+        <TextInput
+          ref={inputRef3 as any}
+          keyboardType="default"
+          value={formData.price}
+          keyboardAppearance={"light"}
+          onChangeText={changePrice}
+          selectionColor={colors.backgroundBlack}
+          placeholder={"$29.99"}
+          style={{
+            marginTop: hp(".5%"),
+            height: wp("7%"),
+            fontSize: 24,
+            fontFamily: fonts.regular,
+            marginLeft: wp("4%"),
+          }}
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: colors.primaryBlack,
+            marginTop: hp("2%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Section
+        </Text>
+        <Picker
+          selectedValue={formData.section}
+          mode="dialog"
+          enabled={true}
+          style={{
+            height: hp("10%"),
+            width: wp("60%"),
+          }}
+          itemStyle={{
+            height: hp("13%"),
+            marginTop: hp("-2.8%"),
+            marginLeft: wp("1.5%"),
+          }}
+          onValueChange={updatePicker}
+        >
+          {sections.map((section) => (
+            <Picker.Item
+              label={`${section.title}`}
+              value={`${section.title}`}
+            />
+          ))}
+        </Picker>
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: colors.primaryBlack,
+            marginTop: hp("-1.5%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Photo
+        </Text>
+        {formData.photo ? (
+          <TouchableOpacity
+            style={{
+              marginTop: hp("1%"),
+              width: wp("30%"),
+              height: wp("30%"),
+              borderRadius: wp("5%"),
+              marginLeft: wp("4%"),
+            }}
+            onPress={addPhoto}
+            activeOpacity={1}
+          >
+            <FastImage
+              style={{
+                width: wp("30%"),
+                height: wp("30%"),
+                borderRadius: wp("5%"),
+              }}
+              source={{
+                uri: formData.photo,
+                priority: FastImage.priority.low,
+              }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={addPhoto}
+            activeOpacity={1}
+            style={{
+              backgroundColor: colors.backgroundLightGrey,
+              justifyContent: "center",
+              marginTop: hp("1%"),
+              width: wp("30%"),
+              height: wp("30%"),
+              borderRadius: wp("5%"),
+              marginLeft: wp("4%"),
+            }}
+          >
+            <Icon
+              style={{
+                fontSize: 64,
+                alignSelf: "center",
+                shadowOpacity: 0.25,
+                elevation: 6,
+                shadowRadius: 12,
+                shadowOffset: { width: 1, height: 10 },
+              }}
+              name="add"
+              color={colors.backgroundBlack}
+            />
+          </TouchableOpacity>
+        )}
         <Button
           onPress={goSave}
           backgroundColor={colors.backgroundLightGrey}
           textColor={colors.backgroundBlack}
-          text={"Add Section"}
+          text={"Add Item"}
           icon={null}
           activeOpacity={1}
           styles={{
             width: wp("50%"),
-            alignSelf: "center",
-            marginTop: hp("1%"),
+            marginLeft: wp("4%"),
+            marginTop: hp("3%"),
           }}
         />
         <Text
@@ -133,15 +382,15 @@ const AddItem: React.FC<{
             fontFamily: fonts.regular,
             color: colors.primaryBlack,
             marginLeft: wp("4%"),
-            marginTop: hp("1%"),
+            marginTop: hp("3%"),
           }}
         >
-          Sections
+          {`Items (${items.length})`}
         </Text>
         <FlatList
           data={items}
           keyExtractor={getKeys}
-          renderItem={renderSection}
+          renderItem={renderItem}
           style={{ maxHeight: hp("25%") }}
           contentContainerStyle={{
             marginLeft: wp("4%"),
@@ -149,6 +398,33 @@ const AddItem: React.FC<{
             marginTop: hp("1%"),
           }}
         />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={closeModal}
+          style={{
+            width: wp("15%"),
+            height: wp("15%"),
+            backgroundColor: colors.backgroundWhite,
+            justifyContent: "center",
+            borderRadius: wp("10%"),
+            alignSelf: "center",
+            position: "absolute",
+            bottom: hp("-3.5%"),
+            shadowOpacity: 0.25,
+            elevation: 6,
+            shadowRadius: 12,
+            shadowOffset: { width: 1, height: 10 },
+          }}
+        >
+          <Icon
+            style={{
+              fontSize: 26,
+              alignSelf: "center",
+            }}
+            name="close"
+            color={colors.backgroundBlack}
+          />
+        </TouchableOpacity>
       </View>
     </Modal>
   );

@@ -14,3 +14,8 @@ export const doGetMyMenus = (uid) => ({
   type: "GET_MY_MENUS",
   payload: getMyMenus(uid),
 });
+
+export const doSetActiveMenu = (menu) => ({
+  type: "SET_ACTIVE_MENU",
+  payload: Promise.resolve(menu),
+});

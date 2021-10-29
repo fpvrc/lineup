@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import {
   TouchableOpacity,
   Image,
   Text,
   StyleSheet,
   Platform,
-} from 'react-native';
-import {useTheme} from '@react-navigation/native';
+} from "react-native";
+import { useTheme } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen";
 
 const Button: React.FC<{
   onPress: () => void;
@@ -29,25 +29,31 @@ const Button: React.FC<{
   activeOpacity,
   styles,
 }) => {
-  const {colors, fonts} = useTheme() as any;
+  const { colors, fonts } = useTheme() as any;
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={activeOpacity}
       style={[
-        {backgroundColor: backgroundColor, shadowColor: colors.backgroundBlack},
+        {
+          backgroundColor: backgroundColor,
+          shadowColor: colors.backgroundBlack,
+        },
         ios_android_styles.button,
         styles,
-      ]}>
-      <Image source={icon} style={ios_android_styles.icon} />
+      ]}
+    >
+      {icon ? <Image source={icon} style={ios_android_styles.icon} /> : null}
       <Text
         style={[
           {
             color: textColor,
             fontFamily: fonts.regular,
+            marginLeft: icon ? wp("3%") : 0,
           },
           ios_android_styles.text,
-        ]}>
+        ]}
+      >
         {text}
       </Text>
     </TouchableOpacity>
@@ -60,22 +66,21 @@ const ios_android_styles = StyleSheet.create({
   ...(Platform.select({
     ios: {
       button: {
-        width: wp('92%'),
-        height: hp('6%'),
-        borderRadius: wp('3%'),
-        flexDirection: 'row',
-        justifyContent: 'center',
+        width: wp("92%"),
+        height: hp("6%"),
+        borderRadius: wp("3%"),
+        flexDirection: "row",
+        justifyContent: "center",
         shadowOpacity: 0.25,
         elevation: 6,
         shadowRadius: 12,
-        shadowOffset: {width: 1, height: 10},
+        shadowOffset: { width: 1, height: 10 },
       },
-      icon: {alignSelf: 'center', width: wp('7%'), resizeMode: 'contain'},
+      icon: { alignSelf: "center", width: wp("7%"), resizeMode: "contain" },
       text: {
-        alignSelf: 'center',
+        alignSelf: "center",
         fontSize: 15,
-        fontWeight: '500',
-        marginLeft: wp('3%'),
+        fontWeight: "500",
       },
     },
     android: {},

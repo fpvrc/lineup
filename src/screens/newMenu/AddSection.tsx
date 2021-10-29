@@ -6,7 +6,7 @@ import {
   TextInput,
   Text,
   FlatList,
-  Alert,
+  TouchableOpacity,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -17,31 +17,45 @@ import {
 import Modal from "react-native-modal";
 import Button from "../../components/buttons/regular";
 import { idGenerator } from "../../api/Workers";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const AddSection: React.FC<{
   isOpen: boolean;
   closeModal: () => void;
   addSection: (section: object) => void;
   sections: any;
-}> = ({ isOpen, closeModal, addSection, sections }) => {
+  modals: string;
+}> = ({ isOpen, closeModal, addSection, sections, modals }) => {
   const { colors, fonts } = useTheme() as any;
   const inputRef = useRef() as any;
+  const [error, setError] = useState(false);
   const [text, setText] = useState("");
 
-  const changeText = (text) => setText(text);
+  const changeText = (text) => {
+    setText(text);
+    if (error) {
+      setError(false);
+    }
+  };
   const getKeys = (item: any) => item.id;
   const goSave = () => {
-    if (!text.length) return;
-    addSection({ id: idGenerator(), section: text });
-    /*
-    setSections((prevState) => [
-      { id: idGenerator(), section: text },
-      ...prevState,
-    ]);
-    */
+    if (
+      !text.length ||
+      text.match(/^ *$/) ||
+      sections.find((section) => section.title === text)
+    ) {
+      setError(true);
+    } else {
+      addSection({ id: idGenerator(), title: text });
+    }
     setText("");
-    return;
   };
+
+  useEffect(() => {
+    if (modals === "section") {
+      inputRef.current.focus();
+    }
+  }, [modals]);
 
   const renderSection = ({ item }) => {
     return (
@@ -63,7 +77,7 @@ const AddSection: React.FC<{
             color: colors.primaryBlack,
           }}
         >
-          {item.section}
+          {item.title}
         </Text>
       </View>
     );
@@ -91,7 +105,7 @@ const AddSection: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: error ? "red" : colors.primaryBlack,
             marginTop: hp("5%"),
             marginLeft: wp("4%"),
           }}
@@ -107,7 +121,7 @@ const AddSection: React.FC<{
           selectionColor={colors.backgroundBlack}
           placeholder={"Entres"}
           style={{
-            marginTop: hp("1%"),
+            marginTop: hp(".5%"),
             height: wp("7%"),
             fontSize: 24,
             fontFamily: fonts.regular,
@@ -123,8 +137,8 @@ const AddSection: React.FC<{
           activeOpacity={1}
           styles={{
             width: wp("50%"),
-            alignSelf: "center",
-            marginTop: hp("1%"),
+            marginLeft: wp("4%"),
+            marginTop: hp("2%"),
           }}
         />
         <Text
@@ -133,10 +147,10 @@ const AddSection: React.FC<{
             fontFamily: fonts.regular,
             color: colors.primaryBlack,
             marginLeft: wp("4%"),
-            marginTop: hp("1%"),
+            marginTop: hp("3.5%"),
           }}
         >
-          Sections
+          {`Sections (${sections.length})`}
         </Text>
         <FlatList
           data={sections}
@@ -149,10 +163,44 @@ const AddSection: React.FC<{
             marginTop: hp("1%"),
           }}
         />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={closeModal}
+          style={{
+            width: wp("15%"),
+            height: wp("15%"),
+            backgroundColor: colors.backgroundWhite,
+            justifyContent: "center",
+            borderRadius: wp("10%"),
+            alignSelf: "center",
+            position: "absolute",
+            bottom: hp("-3.5%"),
+            shadowOpacity: 0.25,
+            elevation: 6,
+            shadowRadius: 12,
+            shadowOffset: { width: 1, height: 10 },
+          }}
+        >
+          <Icon
+            style={{
+              fontSize: 26,
+              alignSelf: "center",
+            }}
+            name="close"
+            color={colors.backgroundBlack}
+          />
+        </TouchableOpacity>
       </View>
     </Modal>
   );
 };
+
+/*
+    setSections((prevState) => [
+      { id: idGenerator(), section: text },
+      ...prevState,
+    ]);
+    */
 
 const mapStateToProps = (state: object) => ({});
 

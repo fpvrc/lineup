@@ -8,6 +8,7 @@ const styles = {
       text: "rgb(28, 28, 30)",
       border: "rgb(199, 199, 204)",
       notification: "rgb(255, 69, 58)",
+      primaryGreen: "#14793F",
       primaryWhite: "#FFFFFF",
       backgroundWhite: "#FDFDFF",
       primaryBlack: "#000000",
@@ -17,6 +18,8 @@ const styles = {
       backgroundLightPink: "#F9CFE0",
       backgroundLightYellow: "#FCEECB",
       backgroundLightGrey: "#D7DDE9",
+      backgroundPurple: "#232232",
+      primaryGrey: "#9C9CA8",
     },
     fonts: {
       regular: "Sora-Regular",

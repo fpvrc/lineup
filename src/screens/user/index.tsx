@@ -33,17 +33,17 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.backgroundWhite,
+        backgroundColor: colors.backgroundPurple,
         padding: wp("4%"),
       }}
     >
-      <View style={{ marginTop: hp("35%") }}>
+      <View style={{ marginTop: hp("25%") }}>
         <TouchableOpacity activeOpacity={1} onPress={goLogout}>
           <Text
             style={{
               fontSize: 30,
               fontFamily: fonts.bold,
-              color: colors.primaryBlack,
+              color: colors.primaryGrey,
             }}
           >
             Hello!
@@ -54,7 +54,7 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
           style={{
             fontSize: 30,
             fontFamily: fonts.bold,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
           }}
         >
           Project Starter
@@ -63,7 +63,7 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
             marginTop: hp(".7%"),
             marginLeft: wp(".5%"),
           }}
@@ -71,10 +71,10 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
           Create an account or login
         </Text>
       </View>
-      <View style={{ marginTop: hp("4%") }}>
+      <View style={{ marginTop: hp("2%") }}>
         <Button
           onPress={goPhone}
-          backgroundColor={colors.backgroundLightBlue}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.primaryWhite}
           text={"Continue with Phone"}
           icon={require(`../../../assets/icons/phone/phone.png`)}
@@ -83,7 +83,7 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
         />
         <Button
           onPress={goApple}
-          backgroundColor={colors.backgroundLightBlue}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.primaryWhite}
           text={"Continue with Apple"}
           icon={require(`../../../assets/icons/apple/apple.png`)}
@@ -92,7 +92,7 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
         />
         <Button
           onPress={goGoogle}
-          backgroundColor={colors.backgroundLightBlue}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.primaryWhite}
           text={"Continue with Google"}
           icon={require(`../../../assets/icons/google/google.png`)}
@@ -101,7 +101,7 @@ const User: React.FC<{ navigation: any; logout: () => void }> = ({
         />
         <Button
           onPress={goFacebook}
-          backgroundColor={colors.backgroundLightBlue}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.primaryWhite}
           text={"Continue with Facebook"}
           icon={require(`../../../assets/icons/facebook/facebook.png`)}

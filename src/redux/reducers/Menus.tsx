@@ -1,5 +1,6 @@
 const initialState = {
   my_menus: [],
+  active_menu: null,
   loading: false,
 };
 
@@ -40,6 +41,11 @@ export default function menusReducer(
       return {
         ...state,
         loading: true,
+      };
+    case "SET_ACTIVE_MENU_FULFILLED":
+      return {
+        ...state,
+        active_menu: action.payload,
       };
     case "LOGOUT_FULFILLED":
       return initialState;
