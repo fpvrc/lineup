@@ -9,6 +9,8 @@ import {
   Alert,
   FlatList,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -118,174 +120,178 @@ const NewMenu: React.FC<{
     inputRef.current.focus();
   }, []);
 
+  const closeKeyboard = () => Keyboard.dismiss();
+
   return (
-    <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
-      <Header onPress={goBack} onInfo={null} showInfo={false} />
-      <Text
-        style={{
-          fontSize: 14,
-          fontFamily: fonts.regular,
-          color: error ? "red" : colors.primaryGrey,
-          marginTop: hp("5%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        Menu Name
-      </Text>
-      <TextInput
-        ref={inputRef as any}
-        keyboardType="default"
-        keyboardAppearance={"light"}
-        onChangeText={changeText}
-        selectionColor={colors.primaryGrey}
-        placeholder={"Brewski Bar"}
-        style={{
-          marginTop: hp("1%"),
-          height: wp("7%"),
-          fontSize: 24,
-          fontFamily: fonts.regular,
-          marginLeft: wp("4%"),
-          color: colors.primaryGrey,
-        }}
-      />
-      <Text
-        style={{
-          fontSize: 14,
-          fontFamily: fonts.regular,
-          color: colors.primaryGrey,
-          marginTop: hp("3%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        Menu Photo
-      </Text>
-      {formData.main_photo ? (
-        <TouchableOpacity
+    <TouchableWithoutFeedback onPress={closeKeyboard}>
+      <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
+        <Header onPress={goBack} onInfo={null} showInfo={false} />
+        <Text
           style={{
-            marginTop: hp("1%"),
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: error ? "red" : colors.primaryGrey,
+            marginTop: hp("5%"),
             marginLeft: wp("4%"),
-            marginRight: wp("4%"),
-            shadowOpacity: 0.25,
-            elevation: 6,
-            shadowRadius: 12,
-            shadowOffset: { width: 1, height: 10 },
-          }}
-          onPress={addPhoto}
-          activeOpacity={1}
-        >
-          <FastImage
-            style={{
-              width: wp("92%"),
-              height: wp("50%"),
-              borderRadius: wp("5%"),
-            }}
-            source={{
-              uri: formData.main_photo,
-              priority: FastImage.priority.low,
-            }}
-          />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity
-          onPress={addPhoto}
-          activeOpacity={1}
-          style={{
-            backgroundColor: colors.backgroundLightBlue,
-            justifyContent: "center",
-            marginTop: hp("1%"),
-            marginLeft: wp("4%"),
-            marginRight: wp("4%"),
-            height: hp("24%"),
-            borderRadius: wp("5%"),
-            shadowOpacity: 0.25,
-            elevation: 6,
-            shadowRadius: 12,
-            shadowOffset: { width: 1, height: 10 },
           }}
         >
-          <Icon
+          Menu Name
+        </Text>
+        <TextInput
+          ref={inputRef as any}
+          keyboardType="default"
+          keyboardAppearance={"light"}
+          onChangeText={changeText}
+          selectionColor={colors.primaryGrey}
+          placeholder={"Brewski Bar"}
+          style={{
+            marginTop: hp("1%"),
+            height: wp("7%"),
+            fontSize: 24,
+            fontFamily: fonts.regular,
+            marginLeft: wp("4%"),
+            color: colors.primaryGrey,
+          }}
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: colors.primaryGrey,
+            marginTop: hp("3%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Menu Photo
+        </Text>
+        {formData.main_photo ? (
+          <TouchableOpacity
             style={{
-              fontSize: 64,
-              alignSelf: "center",
+              marginTop: hp("1%"),
+              marginLeft: wp("4%"),
+              marginRight: wp("4%"),
               shadowOpacity: 0.25,
               elevation: 6,
               shadowRadius: 12,
               shadowOffset: { width: 1, height: 10 },
             }}
-            name="add"
-            color={colors.backgroundBlack}
-          />
-        </TouchableOpacity>
-      )}
-      <Text
-        style={{
-          fontSize: 14,
-          fontFamily: fonts.regular,
-          color: colors.primaryGrey,
-          marginTop: hp("3%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        {`Sections (${formData.sections.length})`}
-      </Text>
-      <Button
-        onPress={openSection}
-        backgroundColor={colors.backgroundLightBlue}
-        textColor={colors.backgroundBlack}
-        text={`Add Section`}
-        icon={null}
-        activeOpacity={1}
-        styles={{ alignSelf: "center", marginTop: hp("1%") }}
-      />
-      <Text
-        style={{
-          fontSize: 14,
-          fontFamily: fonts.regular,
-          color: colors.primaryGrey,
-          marginTop: hp("3%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        {`Items (${formData.items.length})`}
-      </Text>
-      <Button
-        onPress={openItem}
-        backgroundColor={colors.backgroundLightBlue}
-        textColor={colors.backgroundBlack}
-        text={"Add Item"}
-        icon={null}
-        activeOpacity={1}
-        styles={{ alignSelf: "center", marginTop: hp("2%") }}
-      />
-      <Button
-        onPress={goAdd}
-        backgroundColor={colors.primaryGreen}
-        textColor={colors.primaryWhite}
-        text={"Add New Menu"}
-        icon={null}
-        activeOpacity={1}
-        styles={{
-          bottom: hp("7%"),
-          alignSelf: "center",
-          position: "absolute",
-        }}
-      />
-      <AddSection
-        closeModal={closeModal}
-        addSection={addSection}
-        sections={formData.sections}
-        isOpen={modals === "section" ? true : false}
-        modals={modals}
-      />
-      <AddItem
-        closeModal={closeModal}
-        addItem={addItem}
-        items={formData.items}
-        sections={formData.sections}
-        isOpen={modals === "item" ? true : false}
-        modals={modals}
-      />
-    </View>
+            onPress={addPhoto}
+            activeOpacity={1}
+          >
+            <FastImage
+              style={{
+                width: wp("92%"),
+                height: wp("50%"),
+                borderRadius: wp("5%"),
+              }}
+              source={{
+                uri: formData.main_photo,
+                priority: FastImage.priority.low,
+              }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={addPhoto}
+            activeOpacity={1}
+            style={{
+              backgroundColor: colors.backgroundLightBlue,
+              justifyContent: "center",
+              marginTop: hp("1%"),
+              marginLeft: wp("4%"),
+              marginRight: wp("4%"),
+              height: hp("24%"),
+              borderRadius: wp("5%"),
+              shadowOpacity: 0.25,
+              elevation: 6,
+              shadowRadius: 12,
+              shadowOffset: { width: 1, height: 10 },
+            }}
+          >
+            <Icon
+              style={{
+                fontSize: 64,
+                alignSelf: "center",
+                shadowOpacity: 0.25,
+                elevation: 6,
+                shadowRadius: 12,
+                shadowOffset: { width: 1, height: 10 },
+              }}
+              name="add"
+              color={colors.backgroundBlack}
+            />
+          </TouchableOpacity>
+        )}
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: colors.primaryGrey,
+            marginTop: hp("3%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          {`Sections (${formData.sections.length})`}
+        </Text>
+        <Button
+          onPress={openSection}
+          backgroundColor={colors.backgroundLightBlue}
+          textColor={colors.backgroundBlack}
+          text={`Add Section`}
+          icon={null}
+          activeOpacity={1}
+          styles={{ alignSelf: "center", marginTop: hp("1%") }}
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.regular,
+            color: colors.primaryGrey,
+            marginTop: hp("3%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          {`Items (${formData.items.length})`}
+        </Text>
+        <Button
+          onPress={openItem}
+          backgroundColor={colors.backgroundLightBlue}
+          textColor={colors.backgroundBlack}
+          text={"Add Item"}
+          icon={null}
+          activeOpacity={1}
+          styles={{ alignSelf: "center", marginTop: hp("2%") }}
+        />
+        <Button
+          onPress={goAdd}
+          backgroundColor={colors.primaryGreen}
+          textColor={colors.primaryWhite}
+          text={"Add New Menu"}
+          icon={null}
+          activeOpacity={1}
+          styles={{
+            bottom: hp("7%"),
+            alignSelf: "center",
+            position: "absolute",
+          }}
+        />
+        <AddSection
+          closeModal={closeModal}
+          addSection={addSection}
+          sections={formData.sections}
+          isOpen={modals === "section" ? true : false}
+          modals={modals}
+        />
+        <AddItem
+          closeModal={closeModal}
+          addItem={addItem}
+          items={formData.items}
+          sections={formData.sections}
+          isOpen={modals === "item" ? true : false}
+          modals={modals}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
