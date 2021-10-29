@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBar from "./components/tabBar";
 import { doConnectGraph } from "./redux/actions/Auth";
 import { signInAnonymously } from "./api/Auth";
-import { doGetMyMenus } from "./redux/actions/Menus";
+import { doGetMyMenus, doGetMenus } from "./redux/actions/Menus";
 
 //Screens
 import User from "./screens/user";
@@ -22,6 +22,7 @@ import Feed from "./screens/feed";
 import NewMenu from "./screens/newMenu";
 import Menu from "./screens/menu";
 import Item from "./screens/item";
+import Section from "./screens/section";
 
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
@@ -44,7 +45,17 @@ const Navigation: React.FC<{
   getMyMenus: (uid: string) => void;
   graph_authenticated: boolean;
   uid: string;
-}> = ({ setUser, connectGraph, graph_authenticated, uid, getMyMenus }) => {
+  user: any;
+  getMenus: () => void;
+}> = ({
+  setUser,
+  connectGraph,
+  graph_authenticated,
+  uid,
+  getMyMenus,
+  user,
+  getMenus,
+}) => {
   const scheme = useColorScheme();
   const routeNameRef = useRef() as any;
   const initialRender = useRef(false) as any;
@@ -71,8 +82,9 @@ const Navigation: React.FC<{
   useEffect(() => {
     if (graph_authenticated) {
       getMyMenus(uid);
+      getMenus();
     }
-  }, [graph_authenticated]);
+  }, [graph_authenticated, user?.uid]);
 
   const readyUp = () => {
     routeNameRef.current = navigationRef!.current!.getCurrentRoute()!.name;
@@ -107,6 +119,7 @@ const Navigation: React.FC<{
         <Tab.Screen name="NewMenu" component={NewMenu} />
         <Tab.Screen name="Menu" component={Menu} />
         <Tab.Screen name="Item" component={Item} />
+        <Tab.Screen name="Section" component={Section} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
@@ -115,12 +128,14 @@ const Navigation: React.FC<{
 const mapStateToProps = (state: any) => ({
   uid: state.user.user?.uid,
   graph_authenticated: state.auth.graph_authenticated,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   setUser: (user) => dispatch(doSetUser(user)),
   connectGraph: (user) => dispatch(doConnectGraph(user)),
   getMyMenus: (uid) => dispatch(doGetMyMenus(uid)),
+  getMenus: () => dispatch(doGetMenus()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

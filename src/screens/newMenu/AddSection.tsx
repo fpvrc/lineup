@@ -61,7 +61,7 @@ const AddSection: React.FC<{
     return (
       <View
         style={{
-          backgroundColor: colors.backgroundLightYellow,
+          backgroundColor: colors.primaryGrey,
           borderRadius: wp("3%"),
           height: hp("5%"),
           justifyContent: "center",
@@ -97,7 +97,7 @@ const AddSection: React.FC<{
           alignSelf: "center",
           width: wp("92%"),
           height: hp("50%"),
-          backgroundColor: colors.backgroundWhite,
+          backgroundColor: colors.backgroundPurple,
           borderRadius: wp("5%"),
         }}
       >
@@ -105,7 +105,7 @@ const AddSection: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: error ? "red" : colors.primaryBlack,
+            color: error ? "red" : colors.primaryGrey,
             marginTop: hp("5%"),
             marginLeft: wp("4%"),
           }}
@@ -118,7 +118,7 @@ const AddSection: React.FC<{
           value={text}
           keyboardAppearance={"light"}
           onChangeText={changeText}
-          selectionColor={colors.backgroundBlack}
+          selectionColor={colors.primaryGrey}
           placeholder={"Entres"}
           style={{
             marginTop: hp(".5%"),
@@ -126,11 +126,12 @@ const AddSection: React.FC<{
             fontSize: 24,
             fontFamily: fonts.regular,
             marginLeft: wp("4%"),
+            color: colors.primaryGrey,
           }}
         />
         <Button
           onPress={goSave}
-          backgroundColor={colors.backgroundLightGrey}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.backgroundBlack}
           text={"Add Section"}
           icon={null}
@@ -145,7 +146,7 @@ const AddSection: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
             marginLeft: wp("4%"),
             marginTop: hp("3.5%"),
           }}
@@ -169,7 +170,7 @@ const AddSection: React.FC<{
           style={{
             width: wp("15%"),
             height: wp("15%"),
-            backgroundColor: colors.backgroundWhite,
+            backgroundColor: colors.primaryGreen,
             justifyContent: "center",
             borderRadius: wp("10%"),
             alignSelf: "center",

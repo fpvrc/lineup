@@ -104,7 +104,7 @@ const SignInPhone: React.FC<{
           style={{
             fontSize: 30,
             fontFamily: fonts.bold,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
           }}
         >
           Phone Number
@@ -130,16 +130,21 @@ const SignInPhone: React.FC<{
               callingCodeStyle: {
                 fontSize: 30,
                 fontFamily: fonts.regular,
+                color: colors.primaryGrey,
               },
             }}
             modalStyle={{
               container: {},
               searchStyle: { fontFamily: fonts.regular },
-              tileStyle: { fontFamily: fonts.regular },
+              tileStyle: {
+                fontFamily: fonts.regular,
+              },
               itemStyle: {
                 itemContainer: {},
                 flagStyle: {},
-                countryCodeStyle: { fontFamily: fonts.regular },
+                countryCodeStyle: {
+                  fontFamily: fonts.regular,
+                },
                 countryNameStyle: { fontFamily: fonts.regular },
                 callingNameStyle: { fontFamily: fonts.regular },
               },
@@ -155,7 +160,7 @@ const SignInPhone: React.FC<{
             keyboardAppearance={"light"}
             onChangeText={changeText}
             maxLength={10}
-            selectionColor={colors.backgroundBlack}
+            selectionColor={colors.primaryGrey}
             style={{
               height: wp("10%"),
               fontSize: 30,
@@ -163,6 +168,7 @@ const SignInPhone: React.FC<{
               letterSpacing: wp("1%"),
               marginLeft: wp("1%"),
               flex: 1,
+              color: colors.primaryGrey,
             }}
           />
         </View>
@@ -183,7 +189,7 @@ const SignInPhone: React.FC<{
           keyboardAppearance={"light"}
           onChangeText={changeCode}
           textContentType="oneTimeCode"
-          selectionColor={colors.backgroundBlack}
+          selectionColor={colors.primaryGrey}
           style={{
             height: wp("10%"),
             fontSize: 30,
@@ -191,6 +197,7 @@ const SignInPhone: React.FC<{
             letterSpacing: wp("1%"),
             marginLeft: wp("1%"),
             marginTop: hp("3%"),
+            color: colors.primaryGrey,
           }}
         />
       </View>

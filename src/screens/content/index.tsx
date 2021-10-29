@@ -6,6 +6,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -16,11 +17,13 @@ import {
 import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
+import { doSetActiveMenu } from "../../redux/actions/Menus";
 
-const Content: React.FC<{ navigation: any; my_menus: any }> = ({
-  navigation,
-  my_menus,
-}) => {
+const Content: React.FC<{
+  navigation: any;
+  my_menus: any;
+  setActiveMenu: (menu: object) => void;
+}> = ({ navigation, my_menus, setActiveMenu }) => {
   const { colors, fonts } = useTheme() as any;
   const goNewMenu = () => navigation.navigate("NewMenu");
   const [edit, setEdit] = useState(false);
@@ -31,10 +34,11 @@ const Content: React.FC<{ navigation: any; my_menus: any }> = ({
   const renderItem = ({ item }) => {
     const goNav = () => {
       if (edit) {
+        Alert.alert("To do");
         navigation.navigate("");
       } else {
-        return;
-        navigation.navigate("");
+        setActiveMenu(item);
+        navigation.navigate("Menu");
       }
     };
     return (
@@ -156,7 +160,9 @@ const mapStateToProps = (state: any) => ({
   my_menus: state.menus.my_menus,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({});
+const mapDispatchToProps = (dispatch: any) => ({
+  setActiveMenu: (menu) => dispatch(doSetActiveMenu(menu)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Content);
 

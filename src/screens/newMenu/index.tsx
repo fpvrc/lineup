@@ -119,13 +119,13 @@ const NewMenu: React.FC<{
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
       <Header onPress={goBack} onInfo={null} showInfo={false} />
       <Text
         style={{
           fontSize: 14,
           fontFamily: fonts.regular,
-          color: error ? "red" : colors.primaryBlack,
+          color: error ? "red" : colors.primaryGrey,
           marginTop: hp("5%"),
           marginLeft: wp("4%"),
         }}
@@ -137,7 +137,7 @@ const NewMenu: React.FC<{
         keyboardType="default"
         keyboardAppearance={"light"}
         onChangeText={changeText}
-        selectionColor={colors.backgroundBlack}
+        selectionColor={colors.primaryGrey}
         placeholder={"Brewski Bar"}
         style={{
           marginTop: hp("1%"),
@@ -145,13 +145,14 @@ const NewMenu: React.FC<{
           fontSize: 24,
           fontFamily: fonts.regular,
           marginLeft: wp("4%"),
+          color: colors.primaryGrey,
         }}
       />
       <Text
         style={{
           fontSize: 14,
           fontFamily: fonts.regular,
-          color: colors.primaryBlack,
+          color: colors.primaryGrey,
           marginTop: hp("3%"),
           marginLeft: wp("4%"),
         }}
@@ -189,7 +190,7 @@ const NewMenu: React.FC<{
           onPress={addPhoto}
           activeOpacity={1}
           style={{
-            backgroundColor: colors.backgroundLightGrey,
+            backgroundColor: colors.backgroundLightBlue,
             justifyContent: "center",
             marginTop: hp("1%"),
             marginLeft: wp("4%"),
@@ -220,7 +221,7 @@ const NewMenu: React.FC<{
         style={{
           fontSize: 14,
           fontFamily: fonts.regular,
-          color: colors.primaryBlack,
+          color: colors.primaryGrey,
           marginTop: hp("3%"),
           marginLeft: wp("4%"),
         }}
@@ -229,7 +230,7 @@ const NewMenu: React.FC<{
       </Text>
       <Button
         onPress={openSection}
-        backgroundColor={colors.backgroundLightGrey}
+        backgroundColor={colors.backgroundLightBlue}
         textColor={colors.backgroundBlack}
         text={`Add Section`}
         icon={null}
@@ -240,7 +241,7 @@ const NewMenu: React.FC<{
         style={{
           fontSize: 14,
           fontFamily: fonts.regular,
-          color: colors.primaryBlack,
+          color: colors.primaryGrey,
           marginTop: hp("3%"),
           marginLeft: wp("4%"),
         }}
@@ -249,7 +250,7 @@ const NewMenu: React.FC<{
       </Text>
       <Button
         onPress={openItem}
-        backgroundColor={colors.backgroundLightGrey}
+        backgroundColor={colors.backgroundLightBlue}
         textColor={colors.backgroundBlack}
         text={"Add Item"}
         icon={null}
@@ -258,7 +259,7 @@ const NewMenu: React.FC<{
       />
       <Button
         onPress={goAdd}
-        backgroundColor={colors.backgroundLightBlue}
+        backgroundColor={colors.primaryGreen}
         textColor={colors.primaryWhite}
         text={"Add New Menu"}
         icon={null}

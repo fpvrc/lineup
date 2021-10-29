@@ -1,4 +1,4 @@
-import { addMenu, getMyMenus } from "../../api/Menus";
+import { addMenu, getMyMenus, getMenus } from "../../api/Menus";
 
 export const doAddMenu = (uid, formData) => ({
   type: "ADD_MENU",
@@ -18,4 +18,9 @@ export const doGetMyMenus = (uid) => ({
 export const doSetActiveMenu = (menu) => ({
   type: "SET_ACTIVE_MENU",
   payload: Promise.resolve(menu),
+});
+
+export const doGetMenus = () => ({
+  type: "GET_MENUS",
+  payload: getMenus(),
 });

@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -22,15 +23,10 @@ import { doSetActiveMenu } from "../../redux/actions/Menus";
 const Item: React.FC<{
   navigation: any;
   active_menu: any;
-}> = ({ navigation, active_menu }) => {
+  route: any;
+}> = ({ navigation, active_menu, route }) => {
   const { colors, fonts } = useTheme() as any;
-  const [localMenu, setLocalMenu] = useState(null) as any;
-
-  useEffect(() => {
-    if (active_menu) {
-      setLocalMenu(active_menu);
-    }
-  }, [active_menu]);
+  const [localItem, setLocalItem] = useState(route.params) as any;
 
   const getKeys = (item: any) => item.muid;
   const goBack = () => {
@@ -105,71 +101,91 @@ const Item: React.FC<{
       </TouchableOpacity>
       <FastImage
         source={{
-          uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${localMenu?.muid}/default`,
+          uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${localItem?.id}/default`,
           priority: FastImage.priority.high,
         }}
         style={{
           width: wp("100%"),
-          height: wp("65%"),
+          height: wp("100%"),
           borderRadius: wp("10%"),
           alignSelf: "center",
         }}
       />
-      <Text
+      <View
         style={{
-          fontSize: 40,
-          fontFamily: fonts.bold,
-          color: colors.backgroundWhite,
-          marginTop: hp("21%"),
-          position: "absolute",
-          alignSelf: "center",
+          flexDirection: "row",
+          marginLeft: wp("4%"),
+          marginRight: wp("4%"),
+          justifyContent: "space-between",
+          marginTop: hp("5%"),
         }}
       >
-        {active_menu.menu_name}
+        <Text
+          style={{
+            fontSize: 18,
+            fontFamily: fonts.bold,
+            color: colors.primaryGrey,
+          }}
+        >
+          {localItem.title}
+        </Text>
+        <View
+          style={{
+            flex: 1,
+            height: hp(".2%"),
+            backgroundColor: colors.primaryGrey,
+            marginTop: hp("1.9%"),
+            marginLeft: wp("15%"),
+          }}
+        />
+      </View>
+      <Text
+        style={{
+          fontSize: 13,
+          fontFamily: fonts.regular,
+          color: colors.primaryGrey,
+          marginLeft: wp("4%"),
+          marginTop: hp("4%"),
+          marginRight: wp("4%"),
+        }}
+      >
+        {localItem.sub_title}
       </Text>
-      {active_menu?.sections.map((section) => (
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: wp("4%"),
-              marginRight: wp("4%"),
-              justifyContent: "space-between",
-              marginTop: hp("5%"),
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                fontFamily: fonts.bold,
-                color: colors.primaryGrey,
-              }}
-            >
-              {active_menu.menu_name}
-            </Text>
-            <View
-              style={{
-                flex: 1,
-                height: hp(".2%"),
-                backgroundColor: colors.primaryGrey,
-                marginTop: hp("1.9%"),
-                marginLeft: wp("15%"),
-              }}
-            />
-          </View>
-          <FlatList
-            data={active_menu?.items.filter(
-              (item) => item.section === section.title
-            )}
-            renderItem={renderItem}
-            horizontal={true}
-            contentContainerStyle={{
-              marginLeft: wp("4%"),
-              marginTop: hp("1.6"),
-            }}
-          />
-        </View>
-      ))}
+      <Text
+        style={{
+          fontSize: 13,
+          fontFamily: fonts.regular,
+          color: colors.primaryGrey,
+          marginLeft: wp("4%"),
+          marginTop: hp("4%"),
+        }}
+      >
+        {localItem.price}
+      </Text>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={{
+          backgroundColor: colors.primaryGreen,
+          width: wp("16%"),
+          height: hp("2.8%"),
+          justifyContent: "center",
+          borderRadius: wp("4%"),
+          marginTop: hp("4.2%"),
+          marginLeft: wp("4%"),
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 13,
+            fontFamily: fonts.regular,
+            color: colors.backgroundWhite,
+
+            alignSelf: "center",
+          }}
+        >
+          View
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

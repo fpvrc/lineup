@@ -87,7 +87,7 @@ const Feed: React.FC<{
           marginLeft: wp("4%"),
         }}
       >
-        Menu Feed
+        Public Feed
       </Text>
       <FlatList
         data={my_menus}
@@ -100,7 +100,7 @@ const Feed: React.FC<{
 };
 
 const mapStateToProps = (state: any) => ({
-  my_menus: state.menus.my_menus,
+  my_menus: state.menus.menus,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

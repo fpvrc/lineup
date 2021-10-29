@@ -36,12 +36,15 @@ const Menu: React.FC<{
   const goBack = () => {
     navigation.goBack();
   };
+  const goSection = (sect) => {
+    navigation.navigate("Section", sect);
+  };
 
   const renderItem = ({ item }) => {
-    const goNav = () => {};
-
+    const goNav = () => navigation.navigate("Item", item);
     return (
-      <View
+      <TouchableOpacity
+        onPress={goNav}
         style={{
           flexDirection: "column",
           marginRight: wp("4%"),
@@ -78,7 +81,29 @@ const Menu: React.FC<{
         >
           {item.price}
         </Text>
-      </View>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{
+            backgroundColor: colors.primaryGreen,
+            width: wp("16%"),
+            height: hp("2.8%"),
+            justifyContent: "center",
+            borderRadius: wp("4%"),
+            marginTop: hp(".7%"),
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 13,
+              fontFamily: fonts.regular,
+              color: colors.backgroundWhite,
+              alignSelf: "center",
+            }}
+          >
+            View
+          </Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
 
@@ -129,13 +154,16 @@ const Menu: React.FC<{
       </Text>
       {active_menu?.sections.map((section) => (
         <View>
-          <View
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => goSection(section)}
             style={{
               flexDirection: "row",
               marginLeft: wp("4%"),
               marginRight: wp("4%"),
               justifyContent: "space-between",
-              marginTop: hp("5%"),
+              marginTop: hp("2%"),
+              paddingTop: hp("3%"),
             }}
           >
             <Text
@@ -145,7 +173,7 @@ const Menu: React.FC<{
                 color: colors.primaryGrey,
               }}
             >
-              {active_menu.menu_name}
+              {section.title}
             </Text>
             <View
               style={{
@@ -156,7 +184,18 @@ const Menu: React.FC<{
                 marginLeft: wp("15%"),
               }}
             />
-          </View>
+            <Text
+              style={{
+                fontSize: 13,
+                fontFamily: fonts.regular,
+                color: colors.primaryGrey,
+                marginTop: hp(".6%"),
+                paddingLeft: wp("4%"),
+              }}
+            >
+              View
+            </Text>
+          </TouchableOpacity>
           <FlatList
             data={active_menu?.items.filter(
               (item) => item.section === section.title

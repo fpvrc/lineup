@@ -6,7 +6,6 @@ import { RNS3 } from "react-native-upload-aws-s3";
 export const addMenu = async (uid, formData) => {
   try {
     const { muid, menu_name, main_photo, sections, items } = formData;
-    let photo_url = "";
     if (main_photo) {
       const file = {
         uri: main_photo,
@@ -14,11 +13,8 @@ export const addMenu = async (uid, formData) => {
         type: "photo",
       };
       const options = menu_upload(muid);
-      let photo_res = await RNS3.put(file, options);
-      photo_url = photo_res?.body?.postResponse?.location;
+      await RNS3.put(file, options);
     }
-    //add sections
-    //add items to returned query
     let res = (await axios({
       url: (config as any).GRAPH,
       method: "post",
@@ -89,7 +85,6 @@ export const getMyMenus = async (uid) => {
         `,
       },
     })) as any;
-    console.log(res.data.data);
     return res.data.data.menus;
   } catch (error: any) {
     console.log(error.message);
@@ -107,6 +102,44 @@ export const uploadItemPhoto = async (id, photo_uri) => {
     const options = item_upload(id);
     let photo_res = await RNS3.put(file, options);
     return photo_res?.body?.postResponse?.location;
+  } catch (error: any) {
+    console.log(error.message);
+    throw new Error(error.message);
+  }
+};
+
+export const getMenus = async () => {
+  try {
+    let res = (await axios({
+      url: (config as any).GRAPH,
+      method: "post",
+      data: {
+        query: `
+          query {
+            menus(query: {}) {
+              _id
+              main_photo
+              menu_name
+              muid
+              uid
+              sections {
+                id
+                title
+              }
+    					items {
+                id
+                title
+                sub_title
+                price
+                section
+                photo
+              }
+            }
+          }
+        `,
+      },
+    })) as any;
+    return res.data.data.menus;
   } catch (error: any) {
     console.log(error.message);
     throw new Error(error.message);

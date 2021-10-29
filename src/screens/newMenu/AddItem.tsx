@@ -133,7 +133,7 @@ const AddItem: React.FC<{
     return (
       <View
         style={{
-          backgroundColor: colors.backgroundLightYellow,
+          backgroundColor: colors.primaryGrey,
           borderRadius: wp("3%"),
           height: hp("5%"),
           justifyContent: "center",
@@ -169,7 +169,7 @@ const AddItem: React.FC<{
           alignSelf: "center",
           width: wp("92%"),
           height: hp("90%"),
-          backgroundColor: colors.backgroundWhite,
+          backgroundColor: colors.backgroundPurple,
           borderRadius: wp("5%"),
         }}
       >
@@ -180,8 +180,8 @@ const AddItem: React.FC<{
             color: error
               ? !formData.title
                 ? "red"
-                : colors.backgroundBlack
-              : colors.backgroundBlack,
+                : colors.primaryGrey
+              : colors.primaryGrey,
             marginTop: hp("5%"),
             marginLeft: wp("4%"),
           }}
@@ -194,7 +194,7 @@ const AddItem: React.FC<{
           value={formData.title}
           keyboardAppearance={"light"}
           onChangeText={changeTitle}
-          selectionColor={colors.backgroundBlack}
+          selectionColor={colors.primaryGrey}
           placeholder={"Steak"}
           style={{
             marginTop: hp(".5%"),
@@ -202,6 +202,7 @@ const AddItem: React.FC<{
             fontSize: 24,
             fontFamily: fonts.regular,
             marginLeft: wp("4%"),
+            color: colors.primaryGrey,
           }}
         />
         <Text
@@ -211,8 +212,8 @@ const AddItem: React.FC<{
             color: error
               ? !formData.sub_title
                 ? "red"
-                : colors.backgroundBlack
-              : colors.backgroundBlack,
+                : colors.primaryGrey
+              : colors.primaryGrey,
             marginTop: hp("2%"),
             marginLeft: wp("4%"),
           }}
@@ -225,7 +226,7 @@ const AddItem: React.FC<{
           value={formData.sub_title}
           keyboardAppearance={"light"}
           onChangeText={changeSubTitle}
-          selectionColor={colors.backgroundBlack}
+          selectionColor={colors.primaryGrey}
           placeholder={"Local steak"}
           style={{
             marginTop: hp(".5%"),
@@ -233,6 +234,7 @@ const AddItem: React.FC<{
             fontSize: 24,
             fontFamily: fonts.regular,
             marginLeft: wp("4%"),
+            color: colors.primaryGrey,
           }}
         />
         <Text
@@ -242,8 +244,8 @@ const AddItem: React.FC<{
             color: error
               ? !formData.price
                 ? "red"
-                : colors.backgroundBlack
-              : colors.backgroundBlack,
+                : colors.primaryGrey
+              : colors.primaryGrey,
             marginTop: hp("2%"),
             marginLeft: wp("4%"),
           }}
@@ -256,7 +258,7 @@ const AddItem: React.FC<{
           value={formData.price}
           keyboardAppearance={"light"}
           onChangeText={changePrice}
-          selectionColor={colors.backgroundBlack}
+          selectionColor={colors.primaryGrey}
           placeholder={"$29.99"}
           style={{
             marginTop: hp(".5%"),
@@ -264,13 +266,14 @@ const AddItem: React.FC<{
             fontSize: 24,
             fontFamily: fonts.regular,
             marginLeft: wp("4%"),
+            color: colors.primaryGrey,
           }}
         />
         <Text
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
             marginTop: hp("2%"),
             marginLeft: wp("4%"),
           }}
@@ -303,7 +306,7 @@ const AddItem: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
             marginTop: hp("-1.5%"),
             marginLeft: wp("4%"),
           }}
@@ -339,7 +342,7 @@ const AddItem: React.FC<{
             onPress={addPhoto}
             activeOpacity={1}
             style={{
-              backgroundColor: colors.backgroundLightGrey,
+              backgroundColor: colors.backgroundLightBlue,
               justifyContent: "center",
               marginTop: hp("1%"),
               width: wp("30%"),
@@ -364,7 +367,7 @@ const AddItem: React.FC<{
         )}
         <Button
           onPress={goSave}
-          backgroundColor={colors.backgroundLightGrey}
+          backgroundColor={colors.primaryGreen}
           textColor={colors.backgroundBlack}
           text={"Add Item"}
           icon={null}
@@ -379,7 +382,7 @@ const AddItem: React.FC<{
           style={{
             fontSize: 14,
             fontFamily: fonts.regular,
-            color: colors.primaryBlack,
+            color: colors.primaryGrey,
             marginLeft: wp("4%"),
             marginTop: hp("3%"),
           }}
@@ -403,7 +406,7 @@ const AddItem: React.FC<{
           style={{
             width: wp("15%"),
             height: wp("15%"),
-            backgroundColor: colors.backgroundWhite,
+            backgroundColor: colors.primaryGreen,
             justifyContent: "center",
             borderRadius: wp("10%"),
             alignSelf: "center",
