@@ -24,20 +24,15 @@ const Feed: React.FC<{
   setActiveMenu: (menu: object) => void;
 }> = ({ navigation, my_menus, setActiveMenu }) => {
   const { colors, fonts } = useTheme() as any;
-  const goNewMenu = () => navigation.navigate("NewMenu");
-  const [edit, setEdit] = useState(false);
 
   const getKeys = (item: any) => item.muid;
-  const toggleEdit = () => setEdit(!edit);
 
   const renderItem = ({ item }) => {
     const goNav = () => {
-      if (edit) {
-        navigation.navigate("");
-      } else {
-        setActiveMenu(item);
-      }
+      setActiveMenu(item);
+      navigation.navigate("Menu");
     };
+
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -55,25 +50,11 @@ const Feed: React.FC<{
           shadowOffset: { width: 1, height: 10 },
         }}
       >
-        {edit ? (
-          <Icon
-            style={{
-              fontSize: 32,
-              alignSelf: "center",
-              shadowOpacity: 0.25,
-              elevation: 6,
-              shadowRadius: 12,
-              shadowOffset: { width: 1, height: 10 },
-              position: "absolute",
-              marginTop: hp("10%"),
-            }}
-            name="pencil"
-            color={colors.backgroundBlack}
-          />
-        ) : null}
-
         <FastImage
-          source={{ uri: item.main_photo }}
+          source={{
+            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${item.muid}/default`,
+            priority: FastImage.priority.high,
+          }}
           style={{
             width: wp("88%"),
             height: wp("46%"),

@@ -1,4 +1,6 @@
 {
   "GRAPH": "https://us-east-1.aws.realm.mongodb.com/api/client/v2.0/app/application-0-opynp/graphql",
+  "CLOUDFRONT": "https://dylndnkq0y2bd.cloudfront.net",
+  "ACCELRATE": "https://octiblemedia.s3-accelerate.amazonaws.com",
   "URL": "http://localhost:5000/"
 }

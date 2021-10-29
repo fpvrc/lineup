@@ -95,7 +95,7 @@ const SignInPhone: React.FC<{
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.backgroundWhite,
+        backgroundColor: colors.backgroundPurple,
         padding: wp("4%"),
       }}
     >

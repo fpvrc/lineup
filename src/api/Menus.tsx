@@ -17,6 +17,8 @@ export const addMenu = async (uid, formData) => {
       let photo_res = await RNS3.put(file, options);
       photo_url = photo_res?.body?.postResponse?.location;
     }
+    //add sections
+    //add items to returned query
     let res = (await axios({
       url: (config as any).GRAPH,
       method: "post",
@@ -66,15 +68,28 @@ export const getMyMenus = async (uid) => {
           query {
             menus(query: {uid:"${uid}"}) {
               _id
-                  main_photo
-                  menu_name
-                  muid
-                  uid
+              main_photo
+              menu_name
+              muid
+              uid
+              sections {
+                id
+                title
+              }
+    					items {
+                id
+                title
+                sub_title
+                price
+                section
+                photo
+              }
             }
           }
         `,
       },
     })) as any;
+    console.log(res.data.data);
     return res.data.data.menus;
   } catch (error: any) {
     console.log(error.message);

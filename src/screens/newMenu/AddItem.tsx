@@ -88,7 +88,6 @@ const AddItem: React.FC<{
   };
 
   const updatePicker = (itemValue, index) => {
-    console.log(index);
     setFormData((prevState) => ({
       ...prevState,
       section: sections[index].title,

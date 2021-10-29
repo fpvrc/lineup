@@ -12,6 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBar from "./components/tabBar";
 import { doConnectGraph } from "./redux/actions/Auth";
 import { signInAnonymously } from "./api/Auth";
+import { doGetMyMenus } from "./redux/actions/Menus";
 
 //Screens
 import User from "./screens/user";
@@ -19,7 +20,8 @@ import SignInPhone from "./screens/signInPhone";
 import Content from "./screens/content";
 import Feed from "./screens/feed";
 import NewMenu from "./screens/newMenu";
-import { doGetMyMenus } from "./redux/actions/Menus";
+import Menu from "./screens/menu";
+import Item from "./screens/item";
 
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
@@ -103,6 +105,8 @@ const Navigation: React.FC<{
         <MainStack.Screen name="Tabs" component={Tabs} />
         <Tab.Screen name="SignInPhone" component={SignInPhone} />
         <Tab.Screen name="NewMenu" component={NewMenu} />
+        <Tab.Screen name="Menu" component={Menu} />
+        <Tab.Screen name="Item" component={Item} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
