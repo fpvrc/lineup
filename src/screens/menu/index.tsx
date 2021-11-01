@@ -18,6 +18,15 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
+import {
+  SharedElement,
+  SharedElementTransition,
+  nodeFromRef,
+} from "react-native-shared-element";
+
+// Scene2
+let endAncestor;
+let endNode;
 
 const Menu: React.FC<{
   navigation: any;
@@ -50,17 +59,19 @@ const Menu: React.FC<{
           marginRight: wp("4%"),
         }}
       >
-        <FastImage
-          style={{
-            width: wp("28%"),
-            height: wp("28%"),
-            borderRadius: wp("3%"),
-          }}
-          source={{
-            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
-            priority: FastImage.priority.high,
-          }}
-        />
+        <SharedElement id={"test"}>
+          <FastImage
+            style={{
+              width: wp("28%"),
+              height: wp("28%"),
+              borderRadius: wp("3%"),
+            }}
+            source={{
+              uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
+              priority: FastImage.priority.high,
+            }}
+          />
+        </SharedElement>
         <Text
           style={{
             fontSize: 13,
@@ -108,7 +119,10 @@ const Menu: React.FC<{
   };
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
+    <ScrollView
+      ref={(ref) => (endAncestor = nodeFromRef(ref))}
+      style={{ flex: 1, backgroundColor: colors.backgroundPurple }}
+    >
       <TouchableOpacity
         onPress={goBack}
         style={{

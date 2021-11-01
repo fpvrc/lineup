@@ -117,9 +117,9 @@ const Navigation: React.FC<{
         <MainStack.Screen name="Tabs" component={Tabs} />
         <Tab.Screen name="SignInPhone" component={SignInPhone} />
         <Tab.Screen name="NewMenu" component={NewMenu} />
-        <Tab.Screen name="Menu" component={Menu} />
         <Tab.Screen name="Item" component={Item} />
         <Tab.Screen name="Section" component={Section} />
+        <Tab.Screen name="Menu" component={Menu} />
       </MainStack.Navigator>
     </NavigationContainer>
   );

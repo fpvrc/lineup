@@ -34,7 +34,7 @@ const Section: React.FC<{
   const getKeys = (item: any) => item.muid;
   const goBack = () => navigation.goBack();
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
     const goNav = () => navigation.navigate("Item", item);
     return (
       <TouchableOpacity
