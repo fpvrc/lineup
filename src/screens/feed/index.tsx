@@ -17,6 +17,7 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
+import { SharedElement } from "react-navigation-shared-element";
 
 const Feed: React.FC<{
   navigation: any;
@@ -30,7 +31,7 @@ const Feed: React.FC<{
   const renderItem = ({ item }) => {
     const goNav = () => {
       setActiveMenu(item);
-      navigation.navigate("Menu");
+      navigation.navigate("Menu", item);
     };
 
     return (
@@ -50,19 +51,20 @@ const Feed: React.FC<{
           shadowOffset: { width: 1, height: 10 },
         }}
       >
-        <FastImage
-          source={{
-            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${item.muid}/default`,
-            priority: FastImage.priority.high,
-          }}
-          style={{
-            width: wp("88%"),
-            height: wp("46%"),
-            borderRadius: wp("5%"),
-            marginTop: hp("1%"),
-          }}
-        />
-
+        <SharedElement id={`item.${item.muid}.photo`}>
+          <FastImage
+            source={{
+              uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${item.muid}/default`,
+              priority: FastImage.priority.high,
+            }}
+            style={{
+              width: wp("88%"),
+              height: wp("46%"),
+              borderRadius: wp("5%"),
+              marginTop: hp("1%"),
+            }}
+          />
+        </SharedElement>
         <Text
           style={{
             fontSize: 28,

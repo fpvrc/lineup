@@ -18,6 +18,7 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
+import { SharedElement } from "react-navigation-shared-element";
 
 const Section: React.FC<{
   navigation: any;
@@ -46,17 +47,19 @@ const Section: React.FC<{
         }}
       >
         <View style={{ flexDirection: "row" }}>
-          <FastImage
-            source={{
-              uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
-              priority: FastImage.priority.high,
-            }}
-            style={{
-              width: wp("28%"),
-              height: wp("28%"),
-              borderRadius: wp("3%"),
-            }}
-          />
+          <SharedElement id={`item.${item.id}.photo`}>
+            <FastImage
+              source={{
+                uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
+                priority: FastImage.priority.high,
+              }}
+              style={{
+                width: wp("28%"),
+                height: wp("28%"),
+                borderRadius: wp("3%"),
+              }}
+            />
+          </SharedElement>
           <View style={{ flexDirection: "column" }}>
             <Text
               style={{
@@ -147,7 +150,7 @@ const Section: React.FC<{
           zIndex: 1,
           height: hp("5%"),
           width: wp("10%"),
-          marginTop: hp("2.5%"),
+          marginTop: hp("4%"),
           marginLeft: wp("4%"),
         }}
       >
@@ -159,17 +162,19 @@ const Section: React.FC<{
           color={colors.backgroundBlack}
         />
       </TouchableOpacity>
-      <Text
-        style={{
-          fontSize: 20,
-          fontFamily: fonts.bold,
-          color: colors.primaryGrey,
-          marginTop: hp("10%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        Menu Feed
-      </Text>
+      <SharedElement id={`item.${route.params.id}.title`}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: fonts.bold,
+            color: colors.primaryGrey,
+            marginTop: hp("10%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          {route.params.title}
+        </Text>
+      </SharedElement>
       <FlatList
         data={data}
         renderItem={renderItem}

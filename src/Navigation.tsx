@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useColorScheme, Alert, View } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+//import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { navigationRef } from "./lib/Navigation";
 import styles from "./styles";
@@ -24,6 +24,8 @@ import Menu from "./screens/menu";
 import Item from "./screens/item";
 import Section from "./screens/section";
 
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
   return (
@@ -38,7 +40,8 @@ const Tabs: React.FC<{}> = ({}) => {
   );
 };
 
-const MainStack = createNativeStackNavigator();
+//const MainStack = createNativeStackNavigator();
+const MainStack = createSharedElementStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
@@ -112,14 +115,56 @@ const Navigation: React.FC<{
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,
+          cardStyle: { backgroundColor: "transparent" },
+          cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              }),
+            },
+            overlayStyle: {
+              opacity: progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 0.5],
+                extrapolate: "clamp",
+              }),
+            },
+          }),
         }}
+        initialRouteName="Tabs"
       >
         <MainStack.Screen name="Tabs" component={Tabs} />
-        <Tab.Screen name="SignInPhone" component={SignInPhone} />
-        <Tab.Screen name="NewMenu" component={NewMenu} />
-        <Tab.Screen name="Item" component={Item} />
-        <Tab.Screen name="Section" component={Section} />
-        <Tab.Screen name="Menu" component={Menu} />
+        <MainStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `item.${route.params.muid}.photo` }];
+          }}
+          name="Feed"
+          component={Feed}
+        />
+        <MainStack.Screen name="SignInPhone" component={SignInPhone} />
+        <MainStack.Screen name="NewMenu" component={NewMenu} />
+        <MainStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `item.${route.params.id}.photo` }];
+          }}
+          name="Item"
+          component={Item}
+        />
+        <MainStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `item.${route.params.id}.photo` }];
+          }}
+          name="Section"
+          component={Section}
+        />
+        <MainStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `item.${route.params.muid}.photo` }];
+          }}
+          name="Menu"
+          component={Menu}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );
