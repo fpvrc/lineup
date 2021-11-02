@@ -117,16 +117,19 @@ const Navigation: React.FC<{
           headerShown: false,
         }}
       >
-        <MainStack.Screen name="Tabs" component={Tabs} />
-        <Tab.Screen name="SignInPhone" component={SignInPhone} />
-        <Tab.Screen name="NewMenu" component={NewMenu} />
-        <Tab.Screen name="Item" component={Item} />
-        <Tab.Screen name="Section" component={Section} />
-        <Tab.Screen name="Menu" component={Menu} />
+        {/** <MainStack.Screen name="Tabs" component={Tabs} /> */}
+        <MainStack.Screen name="Feed" component={Feed} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
 };
+/*
+ <Tab.Screen name="SignInPhone" component={SignInPhone} />
+        <Tab.Screen name="NewMenu" component={NewMenu} />
+        <Tab.Screen name="Item" component={Item} />
+        <Tab.Screen name="Section" component={Section} />
+        <Tab.Screen name="Menu" component={Menu} />
+        */
 
 const mapStateToProps = (state: any) => ({
   uid: state.user.user?.uid,
