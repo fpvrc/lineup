@@ -14,15 +14,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
-import { SharedElement } from "react-navigation-shared-element";
-
-// Scene2
-let endAncestor;
-let endNode;
 
 const Menu: React.FC<{
   navigation: any;
@@ -55,19 +49,17 @@ const Menu: React.FC<{
           marginRight: wp("4%"),
         }}
       >
-        <SharedElement id={"test"}>
-          <FastImage
-            style={{
-              width: wp("28%"),
-              height: wp("28%"),
-              borderRadius: wp("3%"),
-            }}
-            source={{
-              uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
-              priority: FastImage.priority.high,
-            }}
-          />
-        </SharedElement>
+        <FastImage
+          style={{
+            width: wp("28%"),
+            height: wp("28%"),
+            borderRadius: wp("3%"),
+          }}
+          source={{
+            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
+            priority: FastImage.priority.high,
+          }}
+        />
         <Text
           style={{
             fontSize: 13,

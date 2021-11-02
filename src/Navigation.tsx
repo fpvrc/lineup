@@ -13,7 +13,6 @@ import TabBar from "./components/tabBar";
 import { doConnectGraph } from "./redux/actions/Auth";
 import { signInAnonymously } from "./api/Auth";
 import { doGetMyMenus, doGetMenus } from "./redux/actions/Menus";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
 //Screens
 import User from "./screens/user";
@@ -39,8 +38,7 @@ const Tabs: React.FC<{}> = ({}) => {
   );
 };
 
-//const MainStack = createNativeStackNavigator();
-const MainStack = createSharedElementStackNavigator();
+const MainStack = createNativeStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
