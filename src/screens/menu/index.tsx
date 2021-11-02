@@ -17,11 +17,13 @@ import {
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
+import { SharedElement } from "react-navigation-shared-element";
 
 const Menu: React.FC<{
   navigation: any;
   active_menu: any;
-}> = ({ navigation, active_menu }) => {
+  route: any;
+}> = ({ navigation, active_menu, route }) => {
   const { colors, fonts } = useTheme() as any;
   const [localMenu, setLocalMenu] = useState(null) as any;
 
@@ -31,9 +33,9 @@ const Menu: React.FC<{
     }
   }, [active_menu]);
 
-  const getKeys = (item: any) => item.muid;
+  const getKeys = (item: any) => item.id;
   const goBack = () => {
-    navigation.goBack();
+    navigation.navigate("Tabs", active_menu);
   };
   const goSection = (sect) => {
     navigation.navigate("Section", sect);
@@ -43,23 +45,26 @@ const Menu: React.FC<{
     const goNav = () => navigation.navigate("Item", item);
     return (
       <TouchableOpacity
+        activeOpacity={1}
         onPress={goNav}
         style={{
           flexDirection: "column",
           marginRight: wp("4%"),
         }}
       >
-        <FastImage
-          style={{
-            width: wp("28%"),
-            height: wp("28%"),
-            borderRadius: wp("3%"),
-          }}
-          source={{
-            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
-            priority: FastImage.priority.high,
-          }}
-        />
+        <SharedElement id={`item.${item.id}.photo`}>
+          <FastImage
+            style={{
+              width: wp("28%"),
+              height: wp("28%"),
+              borderRadius: wp("3%"),
+            }}
+            source={{
+              uri: `https://octiblemedia.s3-accelerate.amazonaws.com/items/${item.id}/default`,
+              priority: FastImage.priority.high,
+            }}
+          />
+        </SharedElement>
         <Text
           style={{
             fontSize: 13,
@@ -115,7 +120,7 @@ const Menu: React.FC<{
           zIndex: 1,
           height: hp("5%"),
           width: wp("10%"),
-          marginTop: hp("2.5%"),
+          marginTop: hp("4%"),
           marginLeft: wp("4%"),
         }}
       >
@@ -127,18 +132,20 @@ const Menu: React.FC<{
           color={colors.backgroundBlack}
         />
       </TouchableOpacity>
-      <FastImage
-        source={{
-          uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${localMenu?.muid}/default`,
-          priority: FastImage.priority.high,
-        }}
-        style={{
-          width: wp("100%"),
-          height: wp("65%"),
-          borderRadius: wp("10%"),
-          alignSelf: "center",
-        }}
-      />
+      <SharedElement id={`item.${route.params.muid}.photo`}>
+        <FastImage
+          source={{
+            uri: `https://octiblemedia.s3-accelerate.amazonaws.com/menus/${route.params.muid}/default`,
+            priority: FastImage.priority.high,
+          }}
+          style={{
+            width: wp("100%"),
+            height: wp("65%"),
+            borderRadius: wp("10%"),
+            alignSelf: "center",
+          }}
+        />
+      </SharedElement>
       <Text
         style={{
           fontSize: 40,
@@ -151,8 +158,8 @@ const Menu: React.FC<{
       >
         {active_menu?.menu_name}
       </Text>
-      {active_menu?.sections.map((section) => (
-        <View>
+      {active_menu?.sections.map((section, index) => (
+        <View key={index}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => goSection(section)}
@@ -165,15 +172,17 @@ const Menu: React.FC<{
               paddingTop: hp("3%"),
             }}
           >
-            <Text
-              style={{
-                fontSize: 18,
-                fontFamily: fonts.bold,
-                color: colors.primaryGrey,
-              }}
-            >
-              {section.title}
-            </Text>
+            <SharedElement id={`item.${section.id}.title`}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontFamily: fonts.bold,
+                  color: colors.primaryGrey,
+                }}
+              >
+                {section.title}
+              </Text>
+            </SharedElement>
             <View
               style={{
                 flex: 1,
@@ -195,11 +204,13 @@ const Menu: React.FC<{
               View
             </Text>
           </TouchableOpacity>
+
           <FlatList
             data={active_menu?.items.filter(
               (item) => item.section === section.title
             )}
             renderItem={renderItem}
+            keyExtractor={getKeys}
             horizontal={true}
             contentContainerStyle={{
               marginLeft: wp("4%"),
