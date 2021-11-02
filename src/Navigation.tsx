@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useColorScheme, Alert, View } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+//import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { navigationRef } from "./lib/Navigation";
 import styles from "./styles";
@@ -24,6 +24,8 @@ import Menu from "./screens/menu";
 import Item from "./screens/item";
 import Section from "./screens/section";
 
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+
 const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
   return (
@@ -38,7 +40,8 @@ const Tabs: React.FC<{}> = ({}) => {
   );
 };
 
-const MainStack = createNativeStackNavigator();
+//const MainStack = createNativeStackNavigator();
+const MainStack = createSharedElementStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
