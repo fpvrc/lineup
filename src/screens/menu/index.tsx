@@ -18,11 +18,7 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
-import {
-  SharedElement,
-  SharedElementTransition,
-  nodeFromRef,
-} from "react-native-shared-element";
+import { SharedElement } from "react-navigation-shared-element";
 
 // Scene2
 let endAncestor;
@@ -119,10 +115,7 @@ const Menu: React.FC<{
   };
 
   return (
-    <ScrollView
-      ref={(ref) => (endAncestor = nodeFromRef(ref))}
-      style={{ flex: 1, backgroundColor: colors.backgroundPurple }}
-    >
+    <ScrollView style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
       <TouchableOpacity
         onPress={goBack}
         style={{

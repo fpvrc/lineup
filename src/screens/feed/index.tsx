@@ -17,14 +17,6 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
-import {
-  SharedElement,
-  SharedElementTransition,
-  nodeFromRef,
-} from "react-native-shared-element";
-
-let startAncestor;
-let startNode;
 
 const Feed: React.FC<{
   navigation: any;
@@ -86,10 +78,7 @@ const Feed: React.FC<{
   };
 
   return (
-    <View
-      ref={(ref) => (startAncestor = nodeFromRef(ref))}
-      style={{ flex: 1, backgroundColor: colors.backgroundPurple }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
       <Text
         style={{
           fontSize: 20,
