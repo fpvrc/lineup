@@ -18,6 +18,7 @@ import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
 import { SharedElement } from "react-navigation-shared-element";
+import FadeInView from "../../components/fadeInView";
 
 const Feed: React.FC<{
   navigation: any;
@@ -81,23 +82,25 @@ const Feed: React.FC<{
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
-      <Text
-        style={{
-          fontSize: 20,
-          fontFamily: fonts.bold,
-          color: colors.primaryGrey,
-          marginTop: hp("10%"),
-          marginLeft: wp("4%"),
-        }}
-      >
-        Public Feed
-      </Text>
-      <FlatList
-        data={my_menus}
-        renderItem={renderItem}
-        keyExtractor={getKeys}
-        contentContainerStyle={{ alignItems: "center", marginTop: hp("2%") }}
-      />
+      <FadeInView>
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: fonts.bold,
+            color: colors.primaryGrey,
+            marginTop: hp("10%"),
+            marginLeft: wp("4%"),
+          }}
+        >
+          Public Feed
+        </Text>
+        <FlatList
+          data={my_menus}
+          renderItem={renderItem}
+          keyExtractor={getKeys}
+          contentContainerStyle={{ alignItems: "center", marginTop: hp("2%") }}
+        />
+      </FadeInView>
     </View>
   );
 };

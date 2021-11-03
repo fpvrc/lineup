@@ -18,6 +18,8 @@ import Button from "../../components/buttons/regular";
 import FastImage from "react-native-fast-image";
 import Icon from "react-native-vector-icons/Ionicons";
 import { doSetActiveMenu } from "../../redux/actions/Menus";
+import { SharedElement } from "react-navigation-shared-element";
+import FadeInView from "../../components/fadeInView";
 
 const Content: React.FC<{
   navigation: any;
@@ -106,52 +108,54 @@ const Content: React.FC<{
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
-      <Button
-        onPress={goNewMenu}
-        backgroundColor={colors.primaryGreen}
-        textColor={colors.primaryWhite}
-        text={"Create Menu"}
-        icon={null}
-        activeOpacity={1}
-        styles={{ marginTop: hp("10%"), alignSelf: "center" }}
-      />
-      <View
-        style={{
-          marginTop: hp("5%"),
-          marginLeft: wp("4.5%"),
-          marginRight: wp("4.5%"),
-          paddingBottom: hp("2%"),
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text
+      <FadeInView>
+        <Button
+          onPress={goNewMenu}
+          backgroundColor={colors.primaryGreen}
+          textColor={colors.primaryWhite}
+          text={"Create Menu"}
+          icon={null}
+          activeOpacity={1}
+          styles={{ marginTop: hp("10%"), alignSelf: "center" }}
+        />
+        <View
           style={{
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
+            marginTop: hp("5%"),
+            marginLeft: wp("4.5%"),
+            marginRight: wp("4.5%"),
+            paddingBottom: hp("2%"),
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
-          My menus
-        </Text>
-        <TouchableOpacity activeOpacity={1} onPress={toggleEdit}>
           <Text
             style={{
               fontSize: 14,
               fontFamily: fonts.regular,
-              color: colors.primaryGreen,
+              color: colors.primaryGrey,
             }}
           >
-            {edit ? "Close" : "Edit"}
+            My menus
           </Text>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={my_menus}
-        renderItem={renderItem}
-        keyExtractor={getKeys}
-        contentContainerStyle={{ alignItems: "center" }}
-      />
+          <TouchableOpacity activeOpacity={1} onPress={toggleEdit}>
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: fonts.regular,
+                color: colors.primaryGreen,
+              }}
+            >
+              {edit ? "Close" : "Edit"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={my_menus}
+          renderItem={renderItem}
+          keyExtractor={getKeys}
+          contentContainerStyle={{ alignItems: "center" }}
+        />
+      </FadeInView>
     </View>
   );
 };

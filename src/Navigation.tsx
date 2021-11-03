@@ -30,7 +30,10 @@ const Tab = createBottomTabNavigator();
 const Tabs: React.FC<{}> = ({}) => {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        unmountOnBlur: false,
+      }}
       tabBar={(props) => <TabBar {...props} />}
     >
       <Tab.Screen name="User" component={User} />
@@ -41,7 +44,7 @@ const Tabs: React.FC<{}> = ({}) => {
 };
 
 //const MainStack = createNativeStackNavigator();
-const MainStack = createSharedElementStackNavigator();
+const NavigationStack = createSharedElementStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
@@ -112,7 +115,7 @@ const Navigation: React.FC<{
       onReady={readyUp}
       onStateChange={navStateChange}
     >
-      <MainStack.Navigator
+      <NavigationStack.Navigator
         screenOptions={{
           headerShown: false,
           cardStyle: { backgroundColor: "transparent" },
@@ -134,38 +137,38 @@ const Navigation: React.FC<{
         }}
         initialRouteName="Tabs"
       >
-        <MainStack.Screen name="Tabs" component={Tabs} />
-        <MainStack.Screen
+        <NavigationStack.Screen name="Tabs" component={Tabs} />
+        <NavigationStack.Screen
           sharedElements={(route, otherRoute, showing) => {
             return [{ id: `item.${route.params.muid}.photo` }];
           }}
           name="Feed"
           component={Feed}
         />
-        <MainStack.Screen name="SignInPhone" component={SignInPhone} />
-        <MainStack.Screen name="NewMenu" component={NewMenu} />
-        <MainStack.Screen
+        <NavigationStack.Screen name="SignInPhone" component={SignInPhone} />
+        <NavigationStack.Screen name="NewMenu" component={NewMenu} />
+        <NavigationStack.Screen
           sharedElements={(route, otherRoute, showing) => {
             return [{ id: `item.${route.params.id}.photo` }];
           }}
           name="Item"
           component={Item}
         />
-        <MainStack.Screen
+        <NavigationStack.Screen
           sharedElements={(route, otherRoute, showing) => {
             return [{ id: `item.${route.params.id}.photo` }];
           }}
           name="Section"
           component={Section}
         />
-        <MainStack.Screen
+        <NavigationStack.Screen
           sharedElements={(route, otherRoute, showing) => {
             return [{ id: `item.${route.params.muid}.photo` }];
           }}
           name="Menu"
           component={Menu}
         />
-      </MainStack.Navigator>
+      </NavigationStack.Navigator>
     </NavigationContainer>
   );
 };
