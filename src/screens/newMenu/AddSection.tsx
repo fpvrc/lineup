@@ -121,7 +121,7 @@ const AddSection: React.FC<{
             ref={inputRef as any}
             keyboardType="default"
             value={text}
-            keyboardAppearance={"light"}
+            keyboardAppearance={colors.keyboard}
             onChangeText={changeText}
             selectionColor={colors.primaryGrey}
             placeholder={"Entres"}

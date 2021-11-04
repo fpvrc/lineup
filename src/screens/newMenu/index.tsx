@@ -140,7 +140,7 @@ const NewMenu: React.FC<{
         <TextInput
           ref={inputRef as any}
           keyboardType="default"
-          keyboardAppearance={"light"}
+          keyboardAppearance={colors.keyboard}
           onChangeText={changeText}
           selectionColor={colors.primaryGrey}
           placeholder={"Brewski Bar"}

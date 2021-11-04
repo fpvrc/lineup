@@ -20,6 +20,7 @@ const styles = {
       backgroundLightGrey: "#D7DDE9",
       backgroundPurple: "#232232",
       primaryGrey: "#9C9CA8",
+      keyboard: "dark",
     },
     fonts: {
       regular: "Sora-Regular",

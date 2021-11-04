@@ -23,6 +23,7 @@ import NewMenu from "./screens/newMenu";
 import Menu from "./screens/menu";
 import Item from "./screens/item";
 import Section from "./screens/section";
+import UserProfile from "./screens/userProfile";
 
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
@@ -145,7 +146,13 @@ const Navigation: React.FC<{
           name="Feed"
           component={Feed}
         />
-        <NavigationStack.Screen name="SignInPhone" component={SignInPhone} />
+        <NavigationStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `welcome_title`, animation: "fade" }];
+          }}
+          name="SignInPhone"
+          component={SignInPhone}
+        />
         <NavigationStack.Screen name="NewMenu" component={NewMenu} />
         <NavigationStack.Screen
           sharedElements={(route, otherRoute, showing) => {
@@ -167,6 +174,13 @@ const Navigation: React.FC<{
           }}
           name="Menu"
           component={Menu}
+        />
+        <NavigationStack.Screen
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: `header` }];
+          }}
+          name="UserProfile"
+          component={UserProfile}
         />
       </NavigationStack.Navigator>
     </NavigationContainer>

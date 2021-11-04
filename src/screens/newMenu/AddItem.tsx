@@ -197,7 +197,7 @@ const AddItem: React.FC<{
             ref={inputRef as any}
             keyboardType="default"
             value={formData.title}
-            keyboardAppearance={"light"}
+            keyboardAppearance={colors.keyboard}
             onChangeText={changeTitle}
             selectionColor={colors.primaryGrey}
             placeholder={"Steak"}
@@ -229,7 +229,7 @@ const AddItem: React.FC<{
             ref={inputRef2 as any}
             keyboardType="default"
             value={formData.sub_title}
-            keyboardAppearance={"light"}
+            keyboardAppearance={colors.keyboard}
             onChangeText={changeSubTitle}
             selectionColor={colors.primaryGrey}
             placeholder={"Local steak"}
@@ -261,7 +261,7 @@ const AddItem: React.FC<{
             ref={inputRef3 as any}
             keyboardType="default"
             value={formData.price}
-            keyboardAppearance={"light"}
+            keyboardAppearance={colors.keyboard}
             onChangeText={changePrice}
             selectionColor={colors.primaryGrey}
             placeholder={"$29.99"}

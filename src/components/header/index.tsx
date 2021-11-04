@@ -19,9 +19,9 @@ const Header: React.FC<{
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        marginLeft: wp("4%"),
         marginRight: wp("4%"),
         marginTop: hp("7%"),
+        height: hp("4%"),
       }}
     >
       <TouchableOpacity activeOpacity={1} onPress={onPress}>

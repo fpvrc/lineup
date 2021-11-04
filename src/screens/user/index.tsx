@@ -41,34 +41,12 @@ const User: React.FC<{
   const goGoogle = () => signInGoogle();
   const goFacebook = () => signInFacebook();
   const goLogout = () => logout();
-
-  let offset = useRef(0.5);
-
-  //const offset = useSharedValue(0);
-
-  const fadeIn = () => {
-    "worklet";
-    withTiming(1, {
-      duration: 500,
-    });
-    console.log("runnin");
-  };
-
-  function someWorklet() {
-    "worklet";
-    console.log("From the UI thread");
-  }
-
-  const onPresss = () => {
-    runOnUI(fadeIn)();
-  };
-
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: colors.backgroundPurple,
-        padding: wp("4%"),
+        paddingLeft: wp("4%"),
       }}
     >
       <FadeInView>
@@ -117,16 +95,7 @@ const User: React.FC<{
                   color: colors.primaryGrey,
                 }}
               >
-                Hello:
-              </Text>
-              <Text
-                style={{
-                  fontSize: 30,
-                  fontFamily: fonts.bold,
-                  color: colors.primaryGrey,
-                }}
-              >
-                Project Starter
+                Welcome to lineup!
               </Text>
               <Text
                 style={{
@@ -169,7 +138,7 @@ const User: React.FC<{
                 styles={{ marginTop: hp("2.5%") }}
               />
               <Button
-                onPress={onPresss}
+                onPress={goFacebook}
                 backgroundColor={colors.primaryGreen}
                 textColor={colors.primaryWhite}
                 text={"Continue with Facebook"}

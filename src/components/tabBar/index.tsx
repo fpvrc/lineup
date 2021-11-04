@@ -19,7 +19,7 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
         style={{
           backgroundColor: colors.primaryBlack,
           flexDirection: "row",
-          height: hp("12%"),
+          height: hp("10%"),
           borderTopLeftRadius: wp("5%"),
           borderTopRightRadius: wp("5%"),
         }}
@@ -66,13 +66,13 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
               onLongPress={onLongPress}
               style={{
                 flex: 1,
-                justifyContent: "center",
+                marginTop: hp("2%"),
               }}
             >
               {label === "User" ? (
                 <Icon
                   style={{
-                    fontSize: 40,
+                    fontSize: 32,
                     alignSelf: "center",
                     shadowOpacity: 0.25,
                     elevation: 6,
@@ -85,7 +85,7 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
               ) : label === "Content" ? (
                 <Icon
                   style={{
-                    fontSize: 40,
+                    fontSize: 32,
                     alignSelf: "center",
                     shadowOpacity: 0.25,
                     elevation: 6,
@@ -98,7 +98,7 @@ const TabBar: React.FC<{ state: any; descriptors: any; navigation: any }> = ({
               ) : (
                 <Icon
                   style={{
-                    fontSize: 40,
+                    fontSize: 32,
                     alignSelf: "center",
                     shadowOpacity: 0.25,
                     elevation: 6,
