@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import Animated, {
   Easing,
@@ -6,34 +6,33 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   useDerivedValue,
+  withRepeat,
+  withSequence,
+  runOnUI,
 } from "react-native-reanimated";
 
 const FadeInView = (props, { navigation }) => {
-  //const fadeAnim = React.useRef(new Animated.Value(0)).current;
-  const offset = useSharedValue(0);
+  let offset = useRef(0.5);
 
-  const style = useAnimatedStyle(() => {
-    return {};
-  });
+  //const offset = useSharedValue(0);
 
-  /*
   const fadeIn = () => {
     "worklet";
-    offset.value = withTiming(1, {
-      duration: 125,
+    offset.current = withTiming(1, {
+      duration: 500,
     });
+    console.log("runnin");
   };
 
   const fadeOut = () => {
     "worklet";
-    offset.value = withTiming(0, {
-      duration: 62,
+    offset.current = withTiming(0, {
+      duration: 250,
     });
   };
-  */
 
   useFocusEffect(() => {
-    //fadeIn();
+    runOnUI(fadeIn)();
     /*
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -42,7 +41,7 @@ const FadeInView = (props, { navigation }) => {
     }).start();
     */
     return () => {
-      //fadeOut();
+      runOnUI(fadeOut)();
       /*
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -54,7 +53,9 @@ const FadeInView = (props, { navigation }) => {
   });
 
   return (
-    <Animated.View style={[{ flex: 1 }, {}]}>{props.children}</Animated.View>
+    <Animated.View style={[{ flex: 1, opacity: offset.current }]}>
+      {props.children}
+    </Animated.View>
   );
 };
 

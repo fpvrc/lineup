@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -17,6 +17,16 @@ import { signInApple, signInFacebook, signInGoogle } from "../../api/Auth";
 import { doLogout } from "../../redux/actions/Auth";
 import { SharedElement } from "react-navigation-shared-element";
 import FadeInView from "../../components/fadeInView";
+import Animated, {
+  Easing,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+  useDerivedValue,
+  withRepeat,
+  withSequence,
+  runOnUI,
+} from "react-native-reanimated";
 
 const User: React.FC<{
   navigation: any;
@@ -31,6 +41,27 @@ const User: React.FC<{
   const goGoogle = () => signInGoogle();
   const goFacebook = () => signInFacebook();
   const goLogout = () => logout();
+
+  let offset = useRef(0.5);
+
+  //const offset = useSharedValue(0);
+
+  const fadeIn = () => {
+    "worklet";
+    withTiming(1, {
+      duration: 500,
+    });
+    console.log("runnin");
+  };
+
+  function someWorklet() {
+    "worklet";
+    console.log("From the UI thread");
+  }
+
+  const onPresss = () => {
+    runOnUI(fadeIn)();
+  };
 
   return (
     <View
@@ -138,7 +169,7 @@ const User: React.FC<{
                 styles={{ marginTop: hp("2.5%") }}
               />
               <Button
-                onPress={goFacebook}
+                onPress={onPresss}
                 backgroundColor={colors.primaryGreen}
                 textColor={colors.primaryWhite}
                 text={"Continue with Facebook"}
