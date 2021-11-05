@@ -82,25 +82,23 @@ const Feed: React.FC<{
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.backgroundPurple }}>
-      <FadeInView>
-        <Text
-          style={{
-            fontSize: 20,
-            fontFamily: fonts.bold,
-            color: colors.primaryGrey,
-            marginTop: hp("10%"),
-            marginLeft: wp("4%"),
-          }}
-        >
-          Public Feed
-        </Text>
-        <FlatList
-          data={my_menus}
-          renderItem={renderItem}
-          keyExtractor={getKeys}
-          contentContainerStyle={{ alignItems: "center", marginTop: hp("2%") }}
-        />
-      </FadeInView>
+      <Text
+        style={{
+          fontSize: 20,
+          fontFamily: fonts.bold,
+          color: colors.primaryGrey,
+          marginTop: hp("10%"),
+          marginLeft: wp("4%"),
+        }}
+      >
+        Public Feed
+      </Text>
+      <FlatList
+        data={my_menus}
+        renderItem={renderItem}
+        keyExtractor={getKeys}
+        contentContainerStyle={{ alignItems: "center", marginTop: hp("2%") }}
+      />
     </View>
   );
 };

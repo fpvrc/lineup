@@ -23,7 +23,7 @@ import NewMenu from "./screens/newMenu";
 import Menu from "./screens/menu";
 import Item from "./screens/item";
 import Section from "./screens/section";
-import UserProfile from "./screens/userProfile";
+import NewBusiness from "./screens/newBusiness";
 
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
@@ -175,13 +175,7 @@ const Navigation: React.FC<{
           name="Menu"
           component={Menu}
         />
-        <NavigationStack.Screen
-          sharedElements={(route, otherRoute, showing) => {
-            return [{ id: `header` }];
-          }}
-          name="UserProfile"
-          component={UserProfile}
-        />
+        <NavigationStack.Screen name="NewBusiness" component={NewBusiness} />
       </NavigationStack.Navigator>
     </NavigationContainer>
   );

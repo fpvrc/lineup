@@ -23,3 +23,16 @@ export const item_upload = (id: string) => {
   };
   return options;
 };
+
+export const business_upload = (id: string) => {
+  let options = {
+    keyPrefix: `business/${id}/`,
+    bucket: "octiblemedia",
+    region: "us-west-1",
+    accessKey: "AKIA4HZOXY7WXEHTRQY6",
+    secretKey: "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",
+    successActionStatus: 201,
+    accelerate_url: "https://octiblemedia.s3-accelerate.amazonaws.com",
+  };
+  return options;
+};

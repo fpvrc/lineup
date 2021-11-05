@@ -109,7 +109,7 @@ const SignInPhone: React.FC<{
         }}
       >
         <Header onPress={goBack} onInfo={null} showInfo={false} />
-        <View style={{ marginTop: hp("14%") }}>
+        <View style={{ marginTop: hp("4%") }}>
           <Text
             style={{
               fontSize: 30,

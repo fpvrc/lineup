@@ -8,13 +8,13 @@ const FadeInView: React.FC<{}> = (props) => {
   useFocusEffect(() => {
     Animated.timing(fade, {
       toValue: 1,
-      duration: 100,
+      duration: 50,
       useNativeDriver: true,
     }).start();
     return () => {
       Animated.timing(fade, {
         toValue: 0,
-        duration: 50,
+        duration: 25,
         useNativeDriver: true,
       }).start();
     };
