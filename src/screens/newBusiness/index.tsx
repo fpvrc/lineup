@@ -26,6 +26,7 @@ import { idGenerator } from "../../api/Workers";
 import Button from "../../components/buttons/regular";
 import { validateInput } from "../../lib/Helpers";
 import { doRenderBusiness, doAddBusiness } from "../../redux/actions/Business";
+import PhotoModal from "./photos";
 
 const options = {
   mediaType: "photo",
@@ -44,6 +45,7 @@ const NewBusiness: React.FC<{
     name: "",
     description: "",
     photo: "",
+    photo2: "",
   }) as any;
   const [errors, setErrors] = useState({
     name: false,
@@ -255,6 +257,7 @@ const NewBusiness: React.FC<{
           styles={{ marginTop: hp("4%") }}
         />
       </View>
+      <PhotoModal />
     </TouchableWithoutFeedback>
   );
 };

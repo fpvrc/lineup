@@ -5,6 +5,7 @@ import {
   Platform,
   Text,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -19,13 +20,15 @@ import { SharedElement } from "react-navigation-shared-element";
 import FadeInView from "../../components/fadeInView";
 import { getName } from "../../lib/Helpers";
 import Icon from "react-native-vector-icons/Ionicons";
+import FastImage from "react-native-fast-image";
 
 const User: React.FC<{
   navigation: any;
   logout: () => void;
   graph_authenticated;
   user: any;
-}> = ({ navigation, logout, graph_authenticated, user }) => {
+  my_business: [any];
+}> = ({ navigation, logout, graph_authenticated, user, my_business }) => {
   const { colors, fonts } = useTheme() as any;
 
   let userName = user?.uid.substring(0, 8);
@@ -41,6 +44,12 @@ const User: React.FC<{
   const goBusiness = () => {
     navigation.navigate("NewBusiness");
   };
+
+  const renderBusiness = () => {
+    return <></>;
+  };
+
+  const extractKeys = (item) => item.buid;
 
   return (
     <View
@@ -117,7 +126,7 @@ const User: React.FC<{
                 color: colors.primaryGrey,
               }}
             >
-              Business
+              My Business
             </Text>
             <TouchableOpacity
               style={{
@@ -140,6 +149,11 @@ const User: React.FC<{
               />
             </TouchableOpacity>
           </View>
+          <FlatList
+            data={my_business}
+            renderItem={renderBusiness}
+            keyExtractor={extractKeys}
+          />
         </View>
       ) : (
         <View>
@@ -212,6 +226,7 @@ const User: React.FC<{
 const mapStateToProps = (state: any) => ({
   graph_authenticated: state.auth.graph_authenticated,
   user: state.user.user,
+  my_business: state.business.my_business,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

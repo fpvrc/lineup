@@ -10,7 +10,9 @@ export default function businessReducer(
     case "GET_DATA_FULFILLED":
       return {
         ...state,
-        my_business: action.payload.my_businesses,
+        my_business: action.payload.my_businesses.map((bus) => {
+          if (bus) return bus.buid;
+        }),
       };
     case "GET_MY_BUSINESS_FULFILLED":
       return {
