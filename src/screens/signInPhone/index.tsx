@@ -68,9 +68,7 @@ const SignInPhone: React.FC<{
           setConfirm(confirmation);
           inputRef2.current.focus();
         })();
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else if (phone_number.length === 0) {
       setLoading("");
     }
@@ -83,11 +81,9 @@ const SignInPhone: React.FC<{
           setLoading("code");
           await confirm.confirm(verification_code);
           setLoading("");
-          navigation.goBack();
+          navigation.navigate("User");
         })();
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   }, [verification_code]);
 

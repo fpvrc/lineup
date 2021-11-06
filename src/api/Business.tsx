@@ -28,7 +28,7 @@ export const getMyBusiness = async (uid) => {
       data: {
         query: `
           query {
-            my_businesses (query:{ uid: ${uid}}){
+            my_businesses (query:{ uid: "${uid}"}){
               buid{
                 buid
                 name

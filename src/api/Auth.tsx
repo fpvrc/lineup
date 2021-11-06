@@ -107,3 +107,50 @@ export const logout = async () => {
     throw new Error(error);
   }
 };
+
+export const getData = async (uid) => {
+  try {
+    console.log(uid);
+    let res = (await axios({
+      url: (config as any).GRAPH,
+      method: "post",
+      data: {
+        query: `
+          query {
+            menus(query: {uid:"${uid}"}) {
+              _id
+              main_photo
+              menu_name
+              muid
+              uid
+              sections {
+                id
+                title
+              }
+    					items {
+                id
+                title
+                sub_title
+                price
+                section
+                photo
+              }
+            }
+            my_businesses (query:{ uid: "${uid}"}){
+              buid{
+                buid
+                name
+                photo
+                description
+              }
+            }
+          }
+        `,
+      },
+    })) as any;
+    console.log(res.data.data);
+    return res.data.data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

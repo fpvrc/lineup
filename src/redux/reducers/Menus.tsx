@@ -10,6 +10,11 @@ export default function menusReducer(
   action: { type: string; payload: any }
 ) {
   switch (action.type) {
+    case "GET_DATA_FULFILLED":
+      return {
+        ...state,
+        my_menus: action.payload.my_menus,
+      };
     case "ADD_MENU_FULFILLED":
       return {
         ...state,

@@ -25,7 +25,7 @@ import { uploadBusinessPhoto } from "../../api/Business";
 import { idGenerator } from "../../api/Workers";
 import Button from "../../components/buttons/regular";
 import { validateInput } from "../../lib/Helpers";
-import { doAddBusiness } from "../../redux/actions/Business";
+import { doRenderBusiness, doAddBusiness } from "../../redux/actions/Business";
 
 const options = {
   mediaType: "photo",
@@ -36,7 +36,8 @@ const NewBusiness: React.FC<{
   navigation: any;
   uid: any;
   addBusiness: (uid: string, formData: object) => void;
-}> = ({ navigation, uid, addBusiness }) => {
+  renderBusiness: (formData: object) => void;
+}> = ({ navigation, uid, addBusiness, renderBusiness }) => {
   const { colors, fonts } = useTheme() as any;
   const [formData, setFormData] = useState({
     buid: idGenerator(),
@@ -76,6 +77,7 @@ const NewBusiness: React.FC<{
 
   const goBusiness = () => {
     if (validateInput(formData.name) && validateInput(formData.photo)) {
+      renderBusiness(formData);
       addBusiness(uid, formData);
       navigation.goBack();
     } else {
@@ -263,6 +265,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addBusiness: (uid, formData) => dispatch(doAddBusiness(uid, formData)),
+  renderBusiness: (formData) => dispatch(doRenderBusiness(formData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewBusiness);

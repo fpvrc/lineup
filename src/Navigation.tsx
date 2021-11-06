@@ -13,6 +13,7 @@ import TabBar from "./components/tabBar";
 import { doConnectGraph } from "./redux/actions/Auth";
 import { signInAnonymously } from "./api/Auth";
 import { doGetMyMenus, doGetMenus } from "./redux/actions/Menus";
+import { doGetData } from "./redux/actions/Auth";
 
 //Screens
 import User from "./screens/user";
@@ -54,6 +55,7 @@ const Navigation: React.FC<{
   uid: string;
   user: any;
   getMenus: () => void;
+  getData: (uid: string) => void;
 }> = ({
   setUser,
   connectGraph,
@@ -62,6 +64,7 @@ const Navigation: React.FC<{
   getMyMenus,
   user,
   getMenus,
+  getData,
 }) => {
   const scheme = useColorScheme();
   const routeNameRef = useRef() as any;
@@ -88,8 +91,7 @@ const Navigation: React.FC<{
 
   useEffect(() => {
     if (graph_authenticated) {
-      getMyMenus(uid);
-      getMenus();
+      getData(uid);
     }
   }, [graph_authenticated, user?.uid]);
 
@@ -192,6 +194,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   connectGraph: (user) => dispatch(doConnectGraph(user)),
   getMyMenus: (uid) => dispatch(doGetMyMenus(uid)),
   getMenus: () => dispatch(doGetMenus()),
+  getData: (uid) => dispatch(doGetData(uid)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

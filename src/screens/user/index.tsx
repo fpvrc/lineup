@@ -211,7 +211,7 @@ const User: React.FC<{
 
 const mapStateToProps = (state: any) => ({
   graph_authenticated: state.auth.graph_authenticated,
-  user: state.user?.user,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
