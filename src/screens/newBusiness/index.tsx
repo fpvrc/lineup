@@ -40,6 +40,7 @@ const NewBusiness: React.FC<{
   renderBusiness: (formData: object) => void;
 }> = ({ navigation, uid, addBusiness, renderBusiness }) => {
   const { colors, fonts } = useTheme() as any;
+  const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({
     buid: idGenerator(),
     name: "",
@@ -93,6 +94,8 @@ const NewBusiness: React.FC<{
   const closeKeyboard = () => Keyboard.dismiss();
 
   const goBack = () => navigation.goBack();
+  const openPhotos = () => setVisible(true);
+  const setClose = () => setVisible(false);
 
   const addPhoto = async () => {
     try {
@@ -222,7 +225,7 @@ const NewBusiness: React.FC<{
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={addPhoto}
+            onPress={openPhotos}
             activeOpacity={1}
             style={{
               backgroundColor: colors.backgroundLightBlue,
@@ -256,8 +259,8 @@ const NewBusiness: React.FC<{
           activeOpacity={1}
           styles={{ marginTop: hp("4%") }}
         />
+        <PhotoModal close={setClose} visible={visible} />
       </View>
-      <PhotoModal />
     </TouchableWithoutFeedback>
   );
 };

@@ -46,7 +46,7 @@ const User: React.FC<{
   };
 
   const renderBusiness = () => {
-    return <></>;
+    return <TouchableOpacity style={{}}></TouchableOpacity>;
   };
 
   const extractKeys = (item) => item.buid;
