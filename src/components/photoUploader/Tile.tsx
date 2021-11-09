@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View, Platform, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
@@ -7,7 +7,6 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import FastImage from "react-native-fast-image";
-import { TouchableOpacity } from "react-native";
 
 const Tile: React.FC<{
   onLongPress: () => void;
