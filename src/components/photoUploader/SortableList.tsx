@@ -1,29 +1,38 @@
 import React, { ReactElement } from "react";
-import { StyleSheet, View, Platform, ScrollView } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { connect } from "react-redux";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { Positions, COL, SIZE } from "../../lib/AnimatedConfig";
-import Item from "./Item";
-import { useSharedValue } from "react-native-reanimated";
-import styles from "../../styles";
-let colors = styles.primary_theme.colors;
-let fonts = styles.primary_theme.fonts;
+import Animated, {
+  useAnimatedRef,
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
 
-const SortableList: React.FC<{ children: ReactElement<{ id: string }>[] }> = ({
-  children,
-}) => {
+import Item from "./Item";
+import { COL, Positions, SIZE } from "../../lib/AnimatedConfig";
+
+interface ListProps {
+  children: ReactElement<{ id: string }>[];
+  editing: boolean;
+  onDragEnd: (diff: Positions) => void;
+}
+
+const List = ({ children, editing, onDragEnd }: ListProps) => {
+  const scrollY = useSharedValue(0);
+  const scrollView = useAnimatedRef<Animated.ScrollView>();
   const positions = useSharedValue<Positions>(
     Object.assign(
       {},
       ...children.map((child, index) => ({ [child.props.id]: index }))
     )
   );
+  const onScroll = useAnimatedScrollHandler({
+    onScroll: ({ contentOffset: { y } }) => {
+      scrollY.value = y;
+    },
+  });
+
   return (
-    <ScrollView
+    <Animated.ScrollView
+      onScroll={onScroll}
+      ref={scrollView}
       contentContainerStyle={{
         height: Math.ceil(children.length / COL) * SIZE,
       }}
@@ -33,26 +42,21 @@ const SortableList: React.FC<{ children: ReactElement<{ id: string }>[] }> = ({
     >
       {children.map((child) => {
         return (
-          <Item key={child.props.id} id={child.props.id} positions={positions}>
+          <Item
+            key={child.props.id}
+            positions={positions}
+            id={child.props.id}
+            editing={editing}
+            onDragEnd={onDragEnd}
+            scrollView={scrollView}
+            scrollY={scrollY}
+          >
             {child}
           </Item>
         );
       })}
-    </ScrollView>
+    </Animated.ScrollView>
   );
 };
 
-const mapStateToProps = (state: object) => ({});
-
-const mapDispatchToProps = (dispatch: any) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SortableList);
-
-/*
-const styles = StyleSheet.create({
-  ...Platform.select({
-    ios: {},
-    android: {},
-  }),
-});
-*/
+export default List;

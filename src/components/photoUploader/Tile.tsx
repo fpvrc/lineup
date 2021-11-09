@@ -8,8 +8,6 @@ import {
 } from "react-native-responsive-screen";
 import FastImage from "react-native-fast-image";
 import styles from "../../styles";
-let colors = styles.primary_theme.colors;
-let fonts = styles.primary_theme.fonts;
 
 const Tile: React.FC<{
   onLongPress: () => void;

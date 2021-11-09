@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Platform } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { connect } from "react-redux";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { launchImageLibrary } from "react-native-image-picker";
-import Button from "../buttons/regular";
-import { idGenerator } from "../../api/Workers";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MARGIN } from "../../lib/AnimatedConfig";
 import Tile from "./Tile";
 import SortableList from "./SortableList";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "../../styles";
-
-let colors = styles.primary_theme.colors;
-let fonts = styles.primary_theme.fonts;
+import { connect } from "react-redux";
 
 const options = {
   mediaType: "photo",
@@ -24,27 +12,19 @@ const options = {
 
 const PhotoUploader: React.FC<{}> = ({}) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          width: wp("92%"),
-          height: hp("80%"),
-          backgroundColor: colors.backgroundPurple,
-          borderRadius: wp("5%"),
-        }}
-      >
-        <SortableList>
-          {tiles.map((tile) => (
-            <Tile
-              onLongPress={() => true}
-              key={tile.id}
-              id={tile.id}
-              uri={tile.uri}
-            />
-          ))}
-        </SortableList>
-      </View>
-    </SafeAreaView>
+    <SortableList
+      editing={true}
+      onDragEnd={(positions) => console.log(JSON.stringify(positions, null, 2))}
+    >
+      {[...tiles, ...tiles].map((tile, index) => (
+        <Tile
+          onLongPress={() => true}
+          key={tile.id + "-" + index}
+          id={tile.id + "-" + index}
+          uri={tile.uri}
+        />
+      ))}
+    </SortableList>
   );
 };
 
@@ -81,13 +61,3 @@ const mapStateToProps = (state: object) => ({});
 const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoUploader);
-
-/*
-const styles = StyleSheet.create({
-  ...Platform.select({
-    ios: {},
-    android: {},
-  }),
-});
-
-*/
