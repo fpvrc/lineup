@@ -13,7 +13,9 @@ export default function menusReducer(
     case "GET_DATA_FULFILLED":
       return {
         ...state,
-        my_menus: action.payload.my_menus,
+        my_menus: action.payload?.my_menus
+          ? action.payload.my_menus
+          : state.my_menus,
       };
     case "ADD_MENU_FULFILLED":
       return {

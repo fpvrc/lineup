@@ -21,6 +21,7 @@ import FadeInView from "../../components/fadeInView";
 import { getName } from "../../lib/Helpers";
 import Icon from "react-native-vector-icons/Ionicons";
 import FastImage from "react-native-fast-image";
+import PhotoUploader from "../../components/photoUploader";
 
 const User: React.FC<{
   navigation: any;
@@ -149,11 +150,7 @@ const User: React.FC<{
               />
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={my_business}
-            renderItem={renderBusiness}
-            keyExtractor={extractKeys}
-          />
+          <PhotoUploader />
         </View>
       ) : (
         <View>

@@ -42,11 +42,6 @@ const PhotoUploader: React.FC<{}> = ({}) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (photos.length) {
-      console.log(photos);
-    }
-  }, [photos]);
 
   return (
     <View
@@ -76,7 +71,7 @@ const PhotoUploader: React.FC<{}> = ({}) => {
             onLongPress={() => true}
             key={tile.id}
             id={tile.id}
-            uir={tile.uri}
+            uri={tile.uri}
           />
         ))}
       </SortableList>
@@ -87,36 +82,28 @@ const PhotoUploader: React.FC<{}> = ({}) => {
 const tiles = [
   {
     id: "google",
-    uri: "https://google.com",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.06.13+PM.png",
   },
 
   {
     id: "expo",
-    uri: "https://expo.io",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.12.45+PM.png",
   },
   {
     id: "facebook",
-    uri: "https://facebook.com",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.18.10+PM.png",
   },
   {
     id: "reanimated",
-    uri: "https://docs.swmansion.com/react-native-reanimated/",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.18.33+PM.png",
   },
   {
     id: "github",
-    uri: "https://github.com",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/items/kvbrb23kgdqmi0nue7s/default",
   },
   {
     id: "rnnavigation",
-    uri: "https://reactnavigation.org/",
-  },
-  {
-    id: "youtube",
-    uri: "https://youtube.com",
-  },
-  {
-    id: "twitter",
-    uri: "https://twitter.com",
+    uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/items/kvcp2st1wqubqmbnhmh/default",
   },
 ];
 

@@ -48,6 +48,7 @@ export const getData = async (uid) => {
         `,
       },
     })) as any;
+
     return res.data.data;
   } catch (error: any) {
     throw new Error(error);
