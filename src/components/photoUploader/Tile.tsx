@@ -7,6 +7,9 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import FastImage from "react-native-fast-image";
+import styles from "../../styles";
+let colors = styles.primary_theme.colors;
+let fonts = styles.primary_theme.fonts;
 
 const Tile: React.FC<{
   onLongPress: () => void;
@@ -14,7 +17,6 @@ const Tile: React.FC<{
   key: string;
   id: string;
 }> = ({ onLongPress, uri, key, id }) => {
-  const { colors, fonts } = useTheme() as any;
   return (
     <TouchableOpacity
       style={{
@@ -40,9 +42,11 @@ const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tile);
 
+/*
 const styles = StyleSheet.create({
   ...Platform.select({
     ios: {},
     android: {},
   }),
 });
+*/

@@ -50,22 +50,11 @@ const NavigationStack = createSharedElementStackNavigator();
 const Navigation: React.FC<{
   setUser: (user: object) => void;
   connectGraph: (user: any) => void;
-  getMyMenus: (uid: string) => void;
   graph_authenticated: boolean;
   uid: string;
   user: any;
-  getMenus: () => void;
   getData: (uid: string) => void;
-}> = ({
-  setUser,
-  connectGraph,
-  graph_authenticated,
-  uid,
-  getMyMenus,
-  user,
-  getMenus,
-  getData,
-}) => {
+}> = ({ setUser, connectGraph, graph_authenticated, uid, user, getData }) => {
   const scheme = useColorScheme();
   const routeNameRef = useRef() as any;
   const initialRender = useRef(false) as any;

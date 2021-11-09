@@ -18,13 +18,15 @@ import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
+import styles from "../../styles";
+let colors = styles.primary_theme.colors;
+let fonts = styles.primary_theme.fonts;
 
 const Item: React.FC<{
   children: any;
   positions: Animated.SharedValue<Positions>;
   id: string;
 }> = ({ children, positions, id }) => {
-  const { colors, fonts } = useTheme() as any;
   const inset = useSafeAreaInsets();
   const containerHeight =
     Dimensions.get("window").height - inset.top - inset.bottom;
@@ -77,9 +79,11 @@ const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item);
 
+/*
 const styles = StyleSheet.create({
   ...Platform.select({
     ios: {},
     android: {},
   }),
 });
+*/

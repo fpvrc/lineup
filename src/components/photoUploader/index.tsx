@@ -11,6 +11,11 @@ import Button from "../buttons/regular";
 import { idGenerator } from "../../api/Workers";
 import Tile from "./Tile";
 import SortableList from "./SortableList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import styles from "../../styles";
+
+let colors = styles.primary_theme.colors;
+let fonts = styles.primary_theme.fonts;
 
 const options = {
   mediaType: "photo",
@@ -18,64 +23,28 @@ const options = {
 };
 
 const PhotoUploader: React.FC<{}> = ({}) => {
-  const { colors, fonts } = useTheme() as any;
-
-  const [photos, setPhotos] = useState([]) as any;
-
-  const addPhoto = async () => {
-    try {
-      const promise = new Promise((resolve, reject) => {
-        launchImageLibrary(options as any, (res: any) => {
-          if (res.didCancel) {
-            reject(new Error("User cancelled image picker"));
-          } else if (res.errorMessage) {
-            reject(new Error(res.errorMessage));
-          } else {
-            const source = res.assets[0]?.uri;
-            resolve(source);
-          }
-        });
-      });
-      let uri = await promise;
-      setPhotos((prevState) => [...prevState, { id: idGenerator(), uri: uri }]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <View
-      style={{
-        width: wp("92%"),
-        height: hp("80%"),
-        backgroundColor: colors.backgroundPurple,
-        borderRadius: wp("5%"),
-      }}
-    >
-      <Button
-        onPress={addPhoto}
-        backgroundColor={colors.primaryGreen}
-        textColor={colors.primaryWhite}
-        text={"Add Photo"}
-        icon={null}
-        activeOpacity={1}
-        styles={{
-          marginTop: hp("3%"),
-          width: wp("60%"),
-          alignSelf: "center",
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          width: wp("92%"),
+          height: hp("80%"),
+          backgroundColor: colors.backgroundPurple,
+          borderRadius: wp("5%"),
         }}
-      />
-      <SortableList>
-        {tiles.map((tile) => (
-          <Tile
-            onLongPress={() => true}
-            key={tile.id}
-            id={tile.id}
-            uri={tile.uri}
-          />
-        ))}
-      </SortableList>
-    </View>
+      >
+        <SortableList>
+          {tiles.map((tile) => (
+            <Tile
+              onLongPress={() => true}
+              key={tile.id}
+              id={tile.id}
+              uri={tile.uri}
+            />
+          ))}
+        </SortableList>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -113,9 +82,12 @@ const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoUploader);
 
+/*
 const styles = StyleSheet.create({
   ...Platform.select({
     ios: {},
     android: {},
   }),
 });
+
+*/

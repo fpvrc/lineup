@@ -9,6 +9,9 @@ import {
 import { Positions, COL, SIZE } from "../../lib/AnimatedConfig";
 import Item from "./Item";
 import { useSharedValue } from "react-native-reanimated";
+import styles from "../../styles";
+let colors = styles.primary_theme.colors;
+let fonts = styles.primary_theme.fonts;
 
 const SortableList: React.FC<{ children: ReactElement<{ id: string }>[] }> = ({
   children,
@@ -45,9 +48,11 @@ const mapDispatchToProps = (dispatch: any) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortableList);
 
+/*
 const styles = StyleSheet.create({
   ...Platform.select({
     ios: {},
     android: {},
   }),
 });
+*/
