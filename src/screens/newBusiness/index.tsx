@@ -40,7 +40,7 @@ const NewBusiness: React.FC<{
   renderBusiness: (formData: object) => void;
 }> = ({ navigation, uid, addBusiness, renderBusiness }) => {
   const { colors, fonts } = useTheme() as any;
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false) as any;
   const [formData, setFormData] = useState({
     buid: idGenerator(),
     name: "",
@@ -198,7 +198,7 @@ const NewBusiness: React.FC<{
             color: errors.photo ? "red" : colors.primaryGrey,
           }}
         >
-          Main Photo*
+          Photos*
         </Text>
         {formData.photo ? (
           <TouchableOpacity

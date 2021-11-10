@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Platform, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Platform,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
@@ -17,9 +23,9 @@ const options = {
   title: "Select an image",
 };
 
-const PhotoModal: React.FC<{ visible: boolean; close: () => void }> = ({
-  visible,
+const PhotoModal: React.FC<{ close: () => void; visible }> = ({
   close,
+  visible,
 }) => {
   const { colors, fonts } = useTheme() as any;
   const [photos, setPhotos] = useState([]) as any;
@@ -57,8 +63,16 @@ const PhotoModal: React.FC<{ visible: boolean; close: () => void }> = ({
       isVisible={visible}
       useNativeDriver={true}
       onBackdropPress={close}
+      presentationStyle="fullScreen"
     >
-      <PhotoUploader />
+      <View
+        style={{
+          backgroundColor: colors.backgroundPurple,
+          width: wp("90%"),
+          height: hp("50%"),
+          borderRadius: wp("5%"),
+        }}
+      ></View>
     </Modal>
   );
 };

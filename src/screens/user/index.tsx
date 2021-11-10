@@ -150,7 +150,6 @@ const User: React.FC<{
               />
             </TouchableOpacity>
           </View>
-          <PhotoUploader />
         </View>
       ) : (
         <View>
