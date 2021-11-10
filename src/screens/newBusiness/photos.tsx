@@ -7,7 +7,6 @@ import {
   Text,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { connect } from "react-redux";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -23,13 +22,14 @@ const options = {
   title: "Select an image",
 };
 
-const PhotoModal: React.FC<{ close: () => void; visible }> = ({
+const PhotoModal: React.FC<{ close: () => void; visible: boolean }> = ({
   close,
   visible,
 }) => {
   const { colors, fonts } = useTheme() as any;
   const [photos, setPhotos] = useState([]) as any;
 
+  /*
   const addPhoto = async () => {
     try {
       const promise = new Promise((resolve, reject) => {
@@ -50,11 +50,7 @@ const PhotoModal: React.FC<{ close: () => void; visible }> = ({
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (photos.length) {
-      console.log(photos);
-    }
-  }, [photos]);
+  */
 
   return (
     <Modal
@@ -63,7 +59,6 @@ const PhotoModal: React.FC<{ close: () => void; visible }> = ({
       isVisible={visible}
       useNativeDriver={true}
       onBackdropPress={close}
-      presentationStyle="fullScreen"
     >
       <View
         style={{
@@ -77,11 +72,7 @@ const PhotoModal: React.FC<{ close: () => void; visible }> = ({
   );
 };
 
-const mapStateToProps = (state: object) => ({});
-
-const mapDispatchToProps = (dispatch: any) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PhotoModal);
+export default PhotoModal;
 
 const styles = StyleSheet.create({
   ...Platform.select({

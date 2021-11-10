@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Modal,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -16,7 +17,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { SharedElement } from "react-navigation-shared-element";
 import Header from "../../components/header";
 import Icon from "react-native-vector-icons/Ionicons";
 import FastImage from "react-native-fast-image";
@@ -129,139 +129,137 @@ const NewBusiness: React.FC<{
   };
 
   return (
-    <TouchableWithoutFeedback onPress={closeKeyboard}>
-      <View
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.backgroundPurple,
+        paddingLeft: wp("4%"),
+        paddingRight: wp("4%"),
+      }}
+    >
+      <Header onPress={goBack} onInfo={null} showInfo={false} />
+      <Text
         style={{
-          flex: 1,
-          backgroundColor: colors.backgroundPurple,
-          paddingLeft: wp("4%"),
-          paddingRight: wp("4%"),
+          fontSize: 14,
+          fontFamily: fonts.bold,
+          marginTop: hp("5%"),
+          color: errors.name ? "red" : colors.primaryGrey,
         }}
       >
-        <Header onPress={goBack} onInfo={null} showInfo={false} />
-        <Text
+        Business Name*
+      </Text>
+      <TextInput
+        ref={inputRef as any}
+        keyboardType="default"
+        keyboardAppearance={colors.keyboard}
+        onChangeText={changeTitle}
+        selectionColor={colors.primaryGrey}
+        placeholder={"Bar Wagon"}
+        style={{
+          marginTop: hp(".5%"),
+          height: wp("7%"),
+          fontSize: 24,
+          fontFamily: fonts.regular,
+          color: colors.primaryGrey,
+        }}
+      />
+      <Text
+        style={{
+          fontSize: 14,
+          fontFamily: fonts.bold,
+          marginTop: hp("2%"),
+          color: colors.primaryGrey,
+        }}
+      >
+        Description
+      </Text>
+      <TextInput
+        keyboardType="default"
+        keyboardAppearance={colors.keyboard}
+        onChangeText={changeDescription}
+        selectionColor={colors.primaryGrey}
+        placeholder={"Your favorite local bar"}
+        multiline={true}
+        maxLength={100}
+        numberOfLines={2}
+        style={{
+          marginTop: hp(".5%"),
+          fontSize: 14,
+          fontFamily: fonts.regular,
+          color: colors.primaryGrey,
+        }}
+      />
+      <Text
+        style={{
+          fontSize: 14,
+          fontFamily: fonts.bold,
+          marginTop: hp("2%"),
+          color: errors.photo ? "red" : colors.primaryGrey,
+        }}
+      >
+        Photos*
+      </Text>
+      {formData.photo ? (
+        <TouchableOpacity
           style={{
-            fontSize: 14,
-            fontFamily: fonts.bold,
-            marginTop: hp("5%"),
-            color: errors.name ? "red" : colors.primaryGrey,
+            marginTop: hp("1%"),
+            width: wp("30%"),
+            height: wp("30%"),
+            borderRadius: wp("5%"),
           }}
-        >
-          Business Name*
-        </Text>
-        <TextInput
-          ref={inputRef as any}
-          keyboardType="default"
-          keyboardAppearance={colors.keyboard}
-          onChangeText={changeTitle}
-          selectionColor={colors.primaryGrey}
-          placeholder={"Bar Wagon"}
-          style={{
-            marginTop: hp(".5%"),
-            height: wp("7%"),
-            fontSize: 24,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.bold,
-            marginTop: hp("2%"),
-            color: colors.primaryGrey,
-          }}
-        >
-          Description
-        </Text>
-        <TextInput
-          keyboardType="default"
-          keyboardAppearance={colors.keyboard}
-          onChangeText={changeDescription}
-          selectionColor={colors.primaryGrey}
-          placeholder={"Your favorite local bar"}
-          multiline={true}
-          maxLength={100}
-          numberOfLines={2}
-          style={{
-            marginTop: hp(".5%"),
-            fontSize: 14,
-            fontFamily: fonts.regular,
-            color: colors.primaryGrey,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: fonts.bold,
-            marginTop: hp("2%"),
-            color: errors.photo ? "red" : colors.primaryGrey,
-          }}
-        >
-          Photos*
-        </Text>
-        {formData.photo ? (
-          <TouchableOpacity
-            style={{
-              marginTop: hp("1%"),
-              width: wp("30%"),
-              height: wp("30%"),
-              borderRadius: wp("5%"),
-            }}
-            onPress={addPhoto}
-            activeOpacity={1}
-          >
-            <FastImage
-              style={{
-                width: wp("30%"),
-                height: wp("30%"),
-                borderRadius: wp("5%"),
-              }}
-              source={{
-                uri: formData.photo,
-                priority: FastImage.priority.low,
-              }}
-            />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={openPhotos}
-            activeOpacity={1}
-            style={{
-              backgroundColor: colors.backgroundLightBlue,
-              justifyContent: "center",
-              marginTop: hp("1%"),
-              width: wp("30%"),
-              height: wp("30%"),
-              borderRadius: wp("5%"),
-            }}
-          >
-            <Icon
-              style={{
-                fontSize: 64,
-                alignSelf: "center",
-                shadowOpacity: 0.25,
-                elevation: 6,
-                shadowRadius: 12,
-                shadowOffset: { width: 1, height: 10 },
-              }}
-              name="add"
-              color={colors.backgroundBlack}
-            />
-          </TouchableOpacity>
-        )}
-        <Button
-          onPress={goBusiness}
-          backgroundColor={colors.primaryGreen}
-          textColor={colors.primaryWhite}
-          text={"Add Business"}
-          icon={null}
+          onPress={addPhoto}
           activeOpacity={1}
-          styles={{ marginTop: hp("4%") }}
-        />
-        <PhotoModal close={setClose} visible={visible} />
-      </View>
-    </TouchableWithoutFeedback>
+        >
+          <FastImage
+            style={{
+              width: wp("30%"),
+              height: wp("30%"),
+              borderRadius: wp("5%"),
+            }}
+            source={{
+              uri: formData.photo,
+              priority: FastImage.priority.low,
+            }}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={() => setVisible(!visible)}
+          activeOpacity={1}
+          style={{
+            backgroundColor: colors.backgroundLightBlue,
+            justifyContent: "center",
+            marginTop: hp("1%"),
+            width: wp("30%"),
+            height: wp("30%"),
+            borderRadius: wp("5%"),
+          }}
+        >
+          <Icon
+            style={{
+              fontSize: 64,
+              alignSelf: "center",
+              shadowOpacity: 0.25,
+              elevation: 6,
+              shadowRadius: 12,
+              shadowOffset: { width: 1, height: 10 },
+            }}
+            name="add"
+            color={colors.backgroundBlack}
+          />
+        </TouchableOpacity>
+      )}
+      <Button
+        onPress={() => goBusiness()}
+        backgroundColor={colors.primaryGreen}
+        textColor={colors.primaryWhite}
+        text={"Add Business"}
+        icon={null}
+        activeOpacity={1}
+        styles={{ marginTop: hp("4%") }}
+      />
+      <PhotoModal close={setClose} visible={visible} />
+    </View>
   );
 };
 
@@ -275,10 +273,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewBusiness);
-
-const styles = StyleSheet.create({
-  ...Platform.select({
-    ios: {},
-    android: {},
-  }),
-});
