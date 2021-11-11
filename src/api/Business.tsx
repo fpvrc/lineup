@@ -1,5 +1,5 @@
 import config from "../lib/config.json";
-import { menu_upload, business_upload } from "../lib/S3";
+import { menu_upload, business_upload, s3_upload } from "../lib/S3";
 import { RNS3 } from "react-native-upload-aws-s3";
 import axios from "axios";
 import { Alert } from "react-native";
@@ -89,6 +89,46 @@ export const addBusiness = async (uid, formData) => {
     return res.data.data.insertOneMy_business.buid;
   } catch (error: any) {
     console.log(error.message);
+    throw new Error(error.message);
+  }
+};
+
+export const uploadMain = async (buid, photo) => {
+  try {
+    const file = {
+      uri: photo.uri,
+      name: photo.id,
+      type: "photo",
+    };
+    const options = s3_upload(`business/${photo.id}/`);
+    let photo_res = await RNS3.put(file, options);
+    if (photo_res.status !== 201)
+      throw new Error("Failed to upload image to S3");
+    return {
+      buid: buid,
+      photo: { ...photo, uri: photo_res?.body?.postResponse?.location },
+    };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const uploadCover = async (buid, photo) => {
+  try {
+    const file = {
+      uri: photo.uri,
+      name: photo.id,
+      type: "photo",
+    };
+    const options = s3_upload(`business/${photo.id}/`);
+    let photo_res = await RNS3.put(file, options);
+    if (photo_res.status !== 201)
+      throw new Error("Failed to upload image to S3");
+    return {
+      buid: buid,
+      photo: { ...photo, uri: photo_res?.body?.postResponse?.location },
+    };
+  } catch (error: any) {
     throw new Error(error.message);
   }
 };

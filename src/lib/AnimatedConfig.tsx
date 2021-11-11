@@ -7,7 +7,7 @@ export interface Positions {
 
 const { width } = Dimensions.get("window");
 export const MARGIN = 8;
-export const SIZE = width / 2 - MARGIN;
+export const SIZE = (width - 60) / 2 - MARGIN;
 export const COL = 2;
 
 export const animationConfig = {

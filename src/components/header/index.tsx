@@ -12,8 +12,10 @@ const Header: React.FC<{
   onPress: () => void;
   onInfo: any;
   showInfo: boolean;
-}> = ({ onPress, onInfo, showInfo }) => {
+  steps: [any];
+}> = ({ onPress, onInfo, showInfo, steps }) => {
   const { colors, fonts } = useTheme() as any;
+
   return (
     <View
       style={{
@@ -55,6 +57,21 @@ const Header: React.FC<{
           />
         </TouchableOpacity>
       ) : null}
+      <View style={{ flexDirection: "row" }}>
+        {steps.map((step, index) => (
+          <View
+            key={index}
+            style={{
+              width: wp("8%"),
+              height: wp("1%"),
+              borderRadius: wp("2%"),
+              marginTop: hp("1.8%"),
+              backgroundColor: step === "active" ? colors.primaryGrey : "grey",
+              marginLeft: wp("3%"),
+            }}
+          />
+        ))}
+      </View>
     </View>
   );
 };

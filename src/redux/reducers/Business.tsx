@@ -1,5 +1,6 @@
 const initialState = {
   my_business: [],
+  active_business: {} as any,
 };
 
 export default function businessReducer(
@@ -33,6 +34,40 @@ export default function businessReducer(
             }
           }),
         ],
+      };
+    }
+    case "STEP_ONE_FULFILLED": {
+      return {
+        ...state,
+        active_business: action.payload,
+      };
+    }
+    case "UPLOAD_MAIN_FULFILLED": {
+      return {
+        ...state,
+        active_business: {
+          ...state.active_business,
+          photos: [
+            action.payload,
+            ...state.active_business.photos.filter(
+              (photo) => photo.type !== "main"
+            ),
+          ],
+        },
+      };
+    }
+    case "UPLOAD_COVER_FULFILLED": {
+      return {
+        ...state,
+        active_business: {
+          ...state.active_business,
+          photos: [
+            action.payload,
+            ...state.active_business.photos.filter(
+              (photo) => photo.type !== "cover"
+            ),
+          ],
+        },
       };
     }
     case "RENDER_BUSINESS_FULFILLED": {

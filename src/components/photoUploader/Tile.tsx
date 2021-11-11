@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View, Platform, TouchableOpacity } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -18,10 +18,10 @@ const Tile: React.FC<{
   return (
     <TouchableOpacity
       style={{
-        padding: wp("1%"),
         borderRadius: wp("5%"),
         width: wp("25%"),
         height: wp("25%"),
+        alignSelf: "center",
       }}
       activeOpacity={1}
       onLongPress={onLongPress}
@@ -34,17 +34,4 @@ const Tile: React.FC<{
   );
 };
 
-const mapStateToProps = (state: object) => ({});
-
-const mapDispatchToProps = (dispatch: any) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tile);
-
-/*
-const styles = StyleSheet.create({
-  ...Platform.select({
-    ios: {},
-    android: {},
-  }),
-});
-*/
+export default Tile;

@@ -141,6 +141,8 @@ const Item = ({
   const style = useAnimatedStyle(() => {
     const zIndex = isGestureActive.value ? 100 : 0;
     const scale = withSpring(isGestureActive.value ? 1.05 : 1);
+    const move_y = isNaN(translateY.value) ? 0 : translateY.value;
+    //console.log("move", isNaN(move_y));
     return {
       position: "absolute",
       top: 0,
@@ -150,7 +152,7 @@ const Item = ({
       zIndex,
       transform: [
         { translateX: translateX.value },
-        { translateY: translateY.value },
+        { translateY: move_y },
         { scale },
       ],
     };
@@ -158,9 +160,7 @@ const Item = ({
   return (
     <Animated.View style={style}>
       <PanGestureHandler enabled={editing} onGestureEvent={onGestureEvent}>
-        <Animated.View style={StyleSheet.absoluteFill}>
-          {children}
-        </Animated.View>
+        <Animated.View>{children}</Animated.View>
       </PanGestureHandler>
     </Animated.View>
   );

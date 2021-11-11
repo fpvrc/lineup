@@ -35,6 +35,7 @@ const List = ({ children, editing, onDragEnd }: ListProps) => {
       ref={scrollView}
       contentContainerStyle={{
         height: Math.ceil(children.length / COL) * SIZE,
+        backgroundColor: "red",
       }}
       showsVerticalScrollIndicator={false}
       bounces={false}

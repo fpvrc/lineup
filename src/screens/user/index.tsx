@@ -22,6 +22,7 @@ import { getName } from "../../lib/Helpers";
 import Icon from "react-native-vector-icons/Ionicons";
 import FastImage from "react-native-fast-image";
 import PhotoUploader from "../../components/photoUploader";
+import { doClearStepOne } from "../../redux/actions/Business";
 
 const User: React.FC<{
   navigation: any;
@@ -29,7 +30,15 @@ const User: React.FC<{
   graph_authenticated;
   user: any;
   my_business: [any];
-}> = ({ navigation, logout, graph_authenticated, user, my_business }) => {
+  clearStepOne: () => void;
+}> = ({
+  navigation,
+  logout,
+  graph_authenticated,
+  user,
+  my_business,
+  clearStepOne,
+}) => {
   const { colors, fonts } = useTheme() as any;
 
   let userName = user?.uid.substring(0, 8);
@@ -43,7 +52,8 @@ const User: React.FC<{
   const goFacebook = () => signInFacebook();
   const goLogout = () => logout();
   const goBusiness = () => {
-    navigation.navigate("NewBusiness");
+    navigation.navigate("StepOne");
+    clearStepOne();
   };
 
   const renderBusiness = () => {
@@ -227,6 +237,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   logout: () => dispatch(doLogout()),
+  clearStepOne: () => dispatch(doClearStepOne()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);

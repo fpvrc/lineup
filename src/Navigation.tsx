@@ -24,7 +24,8 @@ import NewMenu from "./screens/newMenu";
 import Menu from "./screens/menu";
 import Item from "./screens/item";
 import Section from "./screens/section";
-import NewBusiness from "./screens/newBusiness";
+import StepOne from "./screens/newBusiness/stepOne";
+import StepTwo from "./screens/newBusiness/stepTwo";
 
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
@@ -166,7 +167,20 @@ const Navigation: React.FC<{
           name="Menu"
           component={Menu}
         />
-        <NavigationStack.Screen name="NewBusiness" component={NewBusiness} />
+        <NavigationStack.Screen
+          name="StepOne"
+          component={StepOne}
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: ``, animation: "fade" }];
+          }}
+        />
+        <NavigationStack.Screen
+          name="StepTwo"
+          component={StepTwo}
+          sharedElements={(route, otherRoute, showing) => {
+            return [{ id: ``, animation: "fade" }];
+          }}
+        />
       </NavigationStack.Navigator>
     </NavigationContainer>
   );

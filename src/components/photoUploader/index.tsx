@@ -1,22 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MARGIN } from "../../lib/AnimatedConfig";
 import Tile from "./Tile";
 import SortableList from "./SortableList";
 import { connect } from "react-redux";
 
-const options = {
-  mediaType: "photo",
-  title: "Select an image",
-};
-
-const PhotoUploader: React.FC<{}> = ({}) => {
+const PhotoUploader: React.FC<{ photos: [any] }> = ({ photos }) => {
   return (
     <SortableList
       editing={true}
       onDragEnd={(positions) => console.log(JSON.stringify(positions, null, 2))}
     >
-      {[...tiles, ...tiles].map((tile, index) => (
+      {photos.map((tile, index) => (
         <Tile
           onLongPress={() => true}
           key={tile.id + "-" + index}
