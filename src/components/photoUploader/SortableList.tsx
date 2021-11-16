@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState, useEffect, useRef } from "react";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -17,12 +17,25 @@ interface ListProps {
 const List = ({ children, editing, onDragEnd }: ListProps) => {
   const scrollY = useSharedValue(0);
   const scrollView = useAnimatedRef<Animated.ScrollView>();
-  const positions = useSharedValue<Positions>(
+  let positions = useSharedValue<Positions>(
     Object.assign(
       {},
       ...children.map((child, index) => ({ [child.props.id]: index }))
     )
   );
+  const first_render = useRef(false);
+
+  useEffect(() => {
+    if (first_render.current) {
+      positions.value = Object.assign(
+        {},
+        ...children.map((child, index) => ({ [child.props.id]: index }))
+      );
+    } else {
+      first_render.current = true;
+    }
+  }, [children.length]);
+
   const onScroll = useAnimatedScrollHandler({
     onScroll: ({ contentOffset: { y } }) => {
       scrollY.value = y;
@@ -41,21 +54,19 @@ const List = ({ children, editing, onDragEnd }: ListProps) => {
       bounces={false}
       scrollEventThrottle={16}
     >
-      {children.map((child) => {
-        return (
-          <Item
-            key={child.props.id}
-            positions={positions}
-            id={child.props.id}
-            editing={editing}
-            onDragEnd={onDragEnd}
-            scrollView={scrollView}
-            scrollY={scrollY}
-          >
-            {child}
-          </Item>
-        );
-      })}
+      {children.map((child) => (
+        <Item
+          key={child.props.id}
+          positions={positions}
+          id={child.props.id}
+          editing={editing}
+          onDragEnd={onDragEnd}
+          scrollView={scrollView}
+          scrollY={scrollY}
+        >
+          {child}
+        </Item>
+      ))}
     </Animated.ScrollView>
   );
 };

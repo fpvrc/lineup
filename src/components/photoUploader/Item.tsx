@@ -141,10 +141,11 @@ const Item = ({
   const style = useAnimatedStyle(() => {
     const zIndex = isGestureActive.value ? 100 : 0;
     const scale = withSpring(isGestureActive.value ? 1.05 : 1);
-    const move_y = isNaN(translateY.value) ? 0 : translateY.value;
-    //console.log("move", isNaN(move_y));
+    const move_y = isNaN(translateY.value) ? 20 : translateY.value;
+
     return {
       position: "absolute",
+      backgroundColor: "green",
       top: 0,
       left: 0,
       width: SIZE,

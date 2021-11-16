@@ -40,7 +40,7 @@ const PhotoModal: React.FC<{
     },
     {
       id: idGenerator(),
-      uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/items/kvbrb23kgdqmi0nue7s/default",
+      uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.06.13+PM.png",
     },
   ]) as any;
 
@@ -49,7 +49,7 @@ const PhotoModal: React.FC<{
       ...prevState,
       {
         id: idGenerator(),
-        uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/items/kvbrb23kgdqmi0nue7s/default",
+        uri: "https://octiblemedia.s3.us-west-1.amazonaws.com/Screen+Shot+2021-01-27+at+1.12.45+PM.png",
       },
     ]);
     return;
